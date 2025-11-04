@@ -2,6 +2,7 @@ package edu.sjsu.android.servicesfinder.view;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
@@ -9,7 +10,12 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
+
+import androidx.core.content.ContextCompat;
+
 import java.util.*;
+
+import edu.sjsu.android.servicesfinder.R;
 
 public class MultiSelectDropdown {
 
@@ -65,6 +71,15 @@ public class MultiSelectDropdown {
 
         ScrollView scrollView = new ScrollView(context);
         scrollView.setFillViewport(true);
+
+        // Force ScrollView to use all remaining height
+        LinearLayout.LayoutParams scrollParams =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        0,
+                        1f
+                );
+        scrollView.setLayoutParams(scrollParams);
 
         LinearLayout listLayout = new LinearLayout(context);
         listLayout.setOrientation(LinearLayout.VERTICAL);
@@ -136,8 +151,27 @@ public class MultiSelectDropdown {
         LinearLayout btnRow = new LinearLayout(context);
         btnRow.setOrientation(LinearLayout.HORIZONTAL);
 
+        // ==================== CANCEL BUTTON ====================
         Button cancel = new Button(context);
         cancel.setText("Cancel");
+
+// Rounded background
+        GradientDrawable cancelBg = new GradientDrawable();
+        cancelBg.setCornerRadius(24);
+        cancelBg.setColor(ContextCompat.getColor(context, R.color.darkslategray));
+
+// Layout params (wrap + margin)
+        LinearLayout.LayoutParams btnParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        btnParams.setMargins(16, 12, 16, 12); // horizontal margin, top/bottom spacing
+
+        cancel.setLayoutParams(btnParams);
+        cancel.setBackground(cancelBg);
+        cancel.setTextColor(ContextCompat.getColor(context, R.color.white));
+        cancel.setStateListAnimator(null); // Removes Material ripple shadow
+
         cancel.setOnClickListener(v -> {
             selectedItems.clear();
             selectedItems.putAll(deepCopy(backupSelection));
@@ -145,12 +179,26 @@ public class MultiSelectDropdown {
             updateText();
         });
 
+
+// ==================== DONE BUTTON ====================
         Button done = new Button(context);
         done.setText("Done");
+
+// Rounded background
+        GradientDrawable doneBg = new GradientDrawable();
+        doneBg.setCornerRadius(24);
+        doneBg.setColor(ContextCompat.getColor(context, R.color.darkslategray));
+
+        done.setLayoutParams(btnParams);
+        done.setBackground(doneBg);
+        done.setTextColor(ContextCompat.getColor(context, R.color.white));
+        done.setStateListAnimator(null);
+
         done.setOnClickListener(v -> {
             updateText();
             dismiss();
         });
+
 
         LinearLayout.LayoutParams weight =
                 new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
