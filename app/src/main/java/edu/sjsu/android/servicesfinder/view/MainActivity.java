@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity
 
             chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
+
                     // Uncheck other chips
                     for (int i = 0; i < filterChipGroup.getChildCount(); i++) {
                         Chip otherChip = (Chip) filterChipGroup.getChildAt(i);
@@ -164,10 +165,24 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
 
-                    currentCategoryFilter = category.equals("All") ? "" : category;
+                    if (category.equals("All")) {
+                        // ✅ Clear search and category filter
+                        currentCategoryFilter = "";
+                        currentSearchQuery = "";
+                        searchEditText.setText("");
+
+                        // ✅ Always reload full dataset
+                        showLoading();
+                        homeController.loadAllProvidersWithServices();
+                        return;
+                    }
+
+                    // For other categories
+                    currentCategoryFilter = category;
                     applyFilters();
                 }
             });
+
 
             filterChipGroup.addView(chip);
         }
