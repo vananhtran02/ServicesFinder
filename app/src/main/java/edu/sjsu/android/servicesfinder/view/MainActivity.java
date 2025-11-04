@@ -166,12 +166,12 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     if (category.equals("All")) {
-                        // ✅ Clear search and category filter
+                        // Clear search and category filter
                         currentCategoryFilter = "";
                         currentSearchQuery = "";
                         searchEditText.setText("");
 
-                        // ✅ Always reload full dataset
+                        // Always reload full dataset
                         showLoading();
                         homeController.loadAllProvidersWithServices();
                         return;
@@ -404,4 +404,12 @@ public class MainActivity extends AppCompatActivity
             searchHandler.removeCallbacks(searchRunnable);
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showLoading();
+        homeController.loadAllProvidersWithServices();
+    }
+
 }
