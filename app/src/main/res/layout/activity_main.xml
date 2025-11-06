@@ -7,64 +7,59 @@
     android:orientation="vertical"
     android:background="#F5F5F5">
 
-    <!-- 1️⃣ Top Bar: Logo + Title (weight = 1) -->
+    <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:background="@color/darkslategray"
-        android:paddingTop="10dp">
+        android:padding="12dp">
 
-        <!-- Logo: 3/10 width, centered vertically -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/logoImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/servicesfinderlogo"
-                android:contentDescription="Logo" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:src="@drawable/servicesfinderlogo"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@string/app_name"/>
 
-        <!-- Title Block: 7/10 width, two stacked lines, centered horizontally -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
             android:orientation="vertical"
-            android:gravity="center_horizontal|center_vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/appTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Services Finder"
+                android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="16sp"
+                android:autoSizeMaxTextSize="30sp"/>
 
             <TextView
+                android:id="@+id/appSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Browse available services"
                 android:textColor="#E3F2FD"
-                android:textSize="16sp" />
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="18sp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- 2️⃣ Middle Bar: Search + Filters + Results (weight = 8) -->
+    <!-- Middle Section -->
     <LinearLayout
         android:id="@+id/middleBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="vertical"
-        android:padding="0dp">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <!-- App Bar with Search -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,32 +69,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="0dp">
+                android:padding="8dp"
+                android:orientation="vertical">
 
-                <!-- Search Bar -->
+                <!-- Search -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp"
-                    android:layout_marginBottom="0dp">
+                    app:cardElevation="2dp">
 
                     <EditText
                         android:id="@+id/searchEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="🔍 Search services, providers, or categories"
-                        android:padding="12dp"
                         android:background="@color/transparent"
+                        android:maxLines="1"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:padding="12dp"/>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Filter Chips -->
+                <!-- Chips -->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,24 +100,23 @@
                         android:id="@+id/filterChipGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:singleSelection="true"
-                        app:chipSpacing="8dp" />
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="8dp"
+                        app:singleSelection="true"/>
                 </HorizontalScrollView>
 
-                <!-- Result Count -->
+                <!-- Results -->
                 <TextView
                     android:id="@+id/resultCountText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Loading..."
                     android:textSize="14sp"
                     android:textColor="@color/purple_700"
-                    android:visibility="gone" />
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- Main Content -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -136,25 +126,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Services List -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/servicesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:clipToPadding="false"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
-                <!-- Loading State -->
                 <ProgressBar
                     android:id="@+id/loadingProgressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="100dp"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
-                <!-- Empty State -->
                 <LinearLayout
                     android:id="@+id/emptyStateView"
                     android:layout_width="match_parent"
@@ -162,77 +148,56 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:padding="32dp"
-                    android:layout_marginTop="100dp"
                     android:visibility="gone">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="🔍"
                         android:textSize="64sp"
-                        android:layout_marginBottom="16dp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
                         android:id="@+id/emptyStateText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No services available"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:lineSpacingExtra="4dp" />
+                        android:gravity="center"/>
                 </LinearLayout>
             </FrameLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
-    <!--  Bottom Bar: Provider CTA (weight = 1) -->
+    <!-- Bottom CTA -->
     <LinearLayout
-        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="12dp"
+        android:gravity="center_vertical"
         android:background="@drawable/bottom_bar_gradient">
 
-        <!-- TextView: 4/5 width, centered text -->
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Want to supply services?"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeMaxTextSize="20sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Want to supply services?"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <!-- Button: 1/4 width, centered button -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/providerBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Providers\Access"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:backgroundTint="@color/chocolate"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/providerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provider Access"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/chocolate"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeMaxTextSize="16sp"/>
     </LinearLayout>
-
 
 </LinearLayout>
