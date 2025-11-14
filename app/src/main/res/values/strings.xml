@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ServicesFinder</string>
+    <string name="full_name_required">Full Name<sup>*</sup></string>
+    <string name="phone_required">Phone Number<sup>*</sup></string>
+    <string name="address_required">Address<sup>*</sup></string>
+    <string name="password_required">Password<sup>*</sup> (min 6 characters)</string>
+    <string name="confirm_password">Confirm Password<sup>*</sup></string>
+    <string name="required_field"><sup>*</sup>: Required field</string>
 </resources>

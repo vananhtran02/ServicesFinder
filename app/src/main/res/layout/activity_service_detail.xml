@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/whitesmoke">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:background="#E0E0E0"
+            android:background="@color/whitesmoke"
             android:contentDescription="Service image" />
 
         <!-- Content Container -->
@@ -158,8 +158,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="📞 Call"
-                    android:backgroundTint="#4CAF50"
-                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/design_default_color_primary"
+                    android:textColor="@color/white"
                     android:layout_marginEnd="4dp" />
 
                 <Button
@@ -168,8 +168,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="✉️ Email"
-                    android:backgroundTint="#2196F3"
-                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/lightseagreen"
+                    android:textColor="@color/white"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp" />
 
@@ -179,8 +179,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="📍 Map"
-                    android:backgroundTint="#FF9800"
-                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/peru"
+                    android:textColor="@color/white"
                     android:layout_marginStart="4dp" />
             </LinearLayout>
         </LinearLayout>

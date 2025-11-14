@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ProviderDashboardActivity" />
+
         <activity
             android:name=".view.ProviderEntryActivity"
             android:exported="true"
@@ -45,9 +46,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.MainActivity" />
         </activity>
-
-
-
+        <activity
+            android:name=".view.EditProfileActivity"
+            android:label="Profile Editing"
+            android:parentActivityName=".view.ProviderDashboardActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".view.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

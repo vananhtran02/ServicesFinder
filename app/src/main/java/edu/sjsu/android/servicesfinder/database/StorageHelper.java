@@ -8,22 +8,20 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 /**
  * StorageHelper
  *
- * This helper class is responsible ONLY for:
+ * Handles:
  *  - Uploading image files to Firebase Storage
  *  - Returning a download URL when finished
- *  - Handling storage-related error messages
+ *  - Translating errors into user-friendly messages
  *
- * Beginners should note:
- *  - Firebase Storage is for binary files (photos, videos, PDFs)
- *  - Firestore is for structured object data
- *  - We store ONLY the URL of a photo in Firestore, NOT the photo itself
+ * Notes:
+ *  - Firebase Storage is for binary files (images, videos, PDFs)
+ *  - Firestore stores only the download URL (not the file itself)
  */
 public class StorageHelper {
 
@@ -38,10 +36,11 @@ public class StorageHelper {
      *
      * @param context      Activity context for UI dialogs
      * @param imageUri     The file path on device (camera/gallery)
+     * @param providerId   The provider's unique ID (Firebase UID or custom ID)
      * @param callback     Returns download URL (String) OR null on failure
      */
     public static void uploadImageToFirebase(Context context, Uri imageUri,
-                                             OnSuccessListener<String> callback) {
+                                             String providerId, OnSuccessListener<String> callback) {
 
         if (imageUri == null) {
             Toast.makeText(context, "No image selected", Toast.LENGTH_SHORT).show();
@@ -55,18 +54,13 @@ public class StorageHelper {
         dialog.setCancelable(false);
         dialog.show();
 
-        // File path: /service_images/userid/timestamp.jpg
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String fileName = "service_images/" + userId + "/" + System.currentTimeMillis() + ".jpg";
-
-        // Build reference inside Firebase Storage
+        // File path: /service_images/{providerId}/{timestamp}.jpg
+        String fileName = "service_images/" + providerId + "/" + System.currentTimeMillis() + ".jpg";
         StorageReference fileRef = storageRef.child(fileName);
 
         // Begin upload
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
-
-                    // Now retrieve the final download URL
                     fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
                         dialog.dismiss();
                         Toast.makeText(context, "Image uploaded!", Toast.LENGTH_SHORT).show();
@@ -75,10 +69,7 @@ public class StorageHelper {
                 })
                 .addOnFailureListener(e -> {
                     dialog.dismiss();
-
-                    // Translate technical message to friendly text
                     String errorMsg = getImageUploadErrorMessage(e);
-
                     new AlertDialog.Builder(context)
                             .setTitle("Upload Failed")
                             .setMessage(errorMsg + "\n\nContinue without image?")

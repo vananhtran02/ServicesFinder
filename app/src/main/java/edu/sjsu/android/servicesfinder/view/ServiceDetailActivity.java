@@ -17,21 +17,16 @@ import edu.sjsu.android.servicesfinder.R;
  */
 public class ServiceDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "ServiceDetail";
-
     // Service info
-    private String serviceId;
     private String serviceTitle;
     private String serviceDescription;
     private String servicePricing;
     private String serviceCategory;
     private String serviceArea;
     private String serviceAvailability;
-    private String serviceContactPreference;
     private String serviceImageUrl;
 
     // Provider info
-    private String providerId;
     private String providerName;
     private String providerPhone;
     private String providerEmail;
@@ -50,45 +45,50 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private Button callButton;
     private Button emailButton;
     private Button locationButton;
+    /*
+    Entry point of the Activity. Initializes the layout, enables the back button in the ActionBar,
+ * sets the title, and triggers the sequence of data extraction, view initialization, data binding, and action setup.
+ *
 
+
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_detail);
+        setContentView(R.layout.activity_service_detail);               // Initializes the layout
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);      // Enable back button in the ActionBar
             getSupportActionBar().setTitle("Service Details");
         }
 
-        getIntentExtras();
+        getIntentExtras();                                              // Retrieves data passed from the main activity
         initializeViews();
         displayServiceInfo();
         setupActionButtons();
     }
 
+    /** Retrieves service and provider data passed from previous activity */
     private void getIntentExtras() {
         Intent intent = getIntent();
 
         // Service data
-        serviceId = intent.getStringExtra("serviceId");
         serviceTitle = intent.getStringExtra("serviceTitle");
         serviceDescription = intent.getStringExtra("serviceDescription");
         servicePricing = intent.getStringExtra("servicePricing");
         serviceCategory = intent.getStringExtra("serviceCategory");
         serviceArea = intent.getStringExtra("serviceArea");
         serviceAvailability = intent.getStringExtra("serviceAvailability");
-        serviceContactPreference = intent.getStringExtra("serviceContactPreference");
         serviceImageUrl = intent.getStringExtra("serviceImageUrl");
 
         // Provider data
-        providerId = intent.getStringExtra("providerId");
         providerName = intent.getStringExtra("providerName");
         providerPhone = intent.getStringExtra("providerPhone");
         providerEmail = intent.getStringExtra("providerEmail");
         providerAddress = intent.getStringExtra("providerAddress");
     }
 
+    /** Initializes all UI view references */
     private void initializeViews() {
         serviceImageView = findViewById(R.id.serviceDetailImage);
         serviceTitleText = findViewById(R.id.serviceDetailTitle);
@@ -104,8 +104,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
         locationButton = findViewById(R.id.locationButton);
     }
 
+    /** Displays all service and provider info in UI */
     private void displayServiceInfo() {
-        // Service title
+        // Title
         serviceTitleText.setText(serviceTitle);
 
         // Pricing
@@ -119,7 +120,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
         // Description
         if (serviceDescription != null && !serviceDescription.isEmpty()) {
             serviceDescriptionText.setText(serviceDescription);
-            serviceDescriptionText.setVisibility(View.VISIBLE);
         } else {
             serviceDescriptionText.setText("No description available");
         }
@@ -127,15 +127,13 @@ public class ServiceDetailActivity extends AppCompatActivity {
         // Category
         if (serviceCategory != null && !serviceCategory.isEmpty()) {
             serviceCategoryText.setText("📂 " + serviceCategory);
-            serviceCategoryText.setVisibility(View.VISIBLE);
         } else {
             serviceCategoryText.setVisibility(View.GONE);
         }
 
-        // Service area
+        // Area
         if (serviceArea != null && !serviceArea.isEmpty()) {
             serviceAreaText.setText("📍 Service Area: " + serviceArea);
-            serviceAreaText.setVisibility(View.VISIBLE);
         } else {
             serviceAreaText.setVisibility(View.GONE);
         }
@@ -143,7 +141,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
         // Availability
         if (serviceAvailability != null && !serviceAvailability.isEmpty()) {
             serviceAvailabilityText.setText("📅 Available: " + serviceAvailability);
-            serviceAvailabilityText.setVisibility(View.VISIBLE);
         } else {
             serviceAvailabilityText.setVisibility(View.GONE);
         }
@@ -151,7 +148,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         // Provider name
         providerNameText.setText("Provider: " + providerName);
 
-        // Provider contact info
+        // Provider contact
         StringBuilder contactInfo = new StringBuilder();
         if (providerPhone != null && !providerPhone.isEmpty()) {
             contactInfo.append("📞 ").append(formatPhone(providerPhone));
@@ -179,8 +176,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
     }
 
+    /** Sets up call, email, and map buttons */
     private void setupActionButtons() {
-        // Call button
+        // Call
         callButton.setOnClickListener(v -> {
             if (providerPhone != null && !providerPhone.isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -191,17 +189,13 @@ public class ServiceDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Email button
+        // Email
         emailButton.setOnClickListener(v -> {
             if (providerEmail != null && !providerEmail.isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:" + providerEmail));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Inquiry about " + serviceTitle);
-                intent.putExtra(Intent.EXTRA_TEXT,
-                        "Hi " + providerName + ",\n\n" +
-                                "I'm interested in your service: " + serviceTitle + "\n\n" +
-                                "Could you please provide more information?\n\n" +
-                                "Thank you!");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hi " + providerName + ",\n\nI'm interested in your service: " + serviceTitle + "\n\nCould you please provide more information?\n\nThank you!");
 
                 try {
                     startActivity(Intent.createChooser(intent, "Send Email"));
@@ -213,10 +207,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Location button
+        // Location
         locationButton.setOnClickListener(v -> {
             if (providerAddress != null && !providerAddress.isEmpty()) {
-                // Open in Google Maps
                 Uri mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(providerAddress));
                 Intent intent = new Intent(Intent.ACTION_VIEW, mapUri);
                 intent.setPackage("com.google.android.apps.maps");
@@ -224,10 +217,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 try {
                     startActivity(intent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    // If Google Maps not installed, open in browser
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://www.google.com/maps/search/?api=1&query=" +
-                                    Uri.encode(providerAddress)));
+                            Uri.parse("https://www.google.com/maps/search/?api=1&query=" + Uri.encode(providerAddress)));
                     startActivity(browserIntent);
                 }
             } else {
@@ -235,37 +226,37 @@ public class ServiceDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Disable buttons if contact info not available
+        // Hide or disable buttons when missing data
         if (providerPhone == null || providerPhone.isEmpty()) {
-            callButton.setEnabled(false);
-            callButton.setAlpha(0.5f);
+            callButton.setVisibility(View.GONE); // completely hide
+        } else {
+            callButton.setVisibility(View.VISIBLE);
         }
 
         if (providerEmail == null || providerEmail.isEmpty()) {
-            emailButton.setEnabled(false);
-            emailButton.setAlpha(0.5f);
+            emailButton.setVisibility(View.GONE); // hide email button
+        } else {
+            emailButton.setVisibility(View.VISIBLE);
         }
 
         if (providerAddress == null || providerAddress.isEmpty()) {
-            locationButton.setEnabled(false);
-            locationButton.setAlpha(0.5f);
+            locationButton.setVisibility(View.GONE);
+        } else {
+            locationButton.setVisibility(View.VISIBLE);
         }
+
     }
 
+    /** Formats a 10-digit phone number as (XXX) XXX-XXXX */
     private String formatPhone(String phone) {
-        if (phone == null || phone.isEmpty()) {
-            return "";
-        }
-
+        if (phone == null || phone.isEmpty()) return "";
         String digits = phone.replaceAll("[^0-9]", "");
-
         if (digits.length() == 10) {
             return String.format("(%s) %s-%s",
                     digits.substring(0, 3),
                     digits.substring(3, 6),
-                    digits.substring(6, 10));
+                    digits.substring(6));
         }
-
         return phone;
     }
 

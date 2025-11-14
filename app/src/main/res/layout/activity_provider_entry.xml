@@ -120,22 +120,26 @@
                     android:textColor="@color/black"
                     android:layout_marginBottom="24dp" />
 
-                <!-- Email -->
+
+                <!-- Email or Phone -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@android:drawable/ic_dialog_email"
+                    app:startIconDrawable="@android:drawable/ic_menu_call"
                     app:boxBackgroundMode="outline">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/signInEmail"
+                        android:id="@+id/signInEmailOrPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
-                        android:inputType="textEmailAddress"
+                        android:hint="Email or Phone"
+                        android:inputType="text"
                         android:maxLines="1" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <!-- Password -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -226,7 +230,7 @@
                         android:id="@+id/signUpFullName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Full Name"
+                        android:hint="@string/full_name_required"
                         android:inputType="textPersonName"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -260,7 +264,7 @@
                         android:id="@+id/signUpPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone Number"
+                        android:hint="@string/phone_required"
                         android:inputType="phone"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -277,7 +281,7 @@
                         android:id="@+id/signUpAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Address"
+                        android:hint="@string/address_required"
                         android:inputType="textPostalAddress"
                         android:maxLines="2" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -295,7 +299,7 @@
                         android:id="@+id/signUpPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password (min 6 characters)"
+                        android:hint="@string/password_required"
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -313,10 +317,20 @@
                         android:id="@+id/signUpConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Confirm Password"
+                        android:hint="@string/confirm_password"
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/required_field"
+                    android:textSize="12sp"
+                    android:textColor="@color/red"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <!-- Sign Up Button -->
                 <LinearLayout

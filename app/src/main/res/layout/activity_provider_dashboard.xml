@@ -98,14 +98,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/catalogueDropdown"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:drawableEnd="@drawable/ic_arrow_drop_down"
                     android:layout_marginTop="4dp"
-                    android:inputType="none"
-
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
                     android:focusable="false"
                     android:cursorVisible="false"
                     android:clickable="true"
@@ -181,7 +181,7 @@
                 android:background="@drawable/border_box"
                 android:orientation="vertical">
 
-                - Row 1: Mon, Tue, Wed, Thu
+                <!-- Row 1: Mon, Tue, Wed, Thu -->
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
@@ -293,12 +293,12 @@
                     android:id="@+id/uploadImageBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="Upload Image"
+                    android:text="Upload Service Image"
                     android:textAllCaps="false"
                     android:drawableStart="@drawable/ic_upload"
                     android:drawablePadding="8dp"
                     android:background="@drawable/button_border"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey"
                     android:textSize="14sp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"

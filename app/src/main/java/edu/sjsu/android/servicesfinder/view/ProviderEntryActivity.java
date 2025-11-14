@@ -1,5 +1,7 @@
 package edu.sjsu.android.servicesfinder.view;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,65 +14,78 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.BuildConfig;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
 import edu.sjsu.android.servicesfinder.R;
+import edu.sjsu.android.servicesfinder.controller.SessionManager;
 import edu.sjsu.android.servicesfinder.controller.ProviderController;
-import edu.sjsu.android.servicesfinder.database.ProviderDatabase;
 import edu.sjsu.android.servicesfinder.model.Provider;
 
-/* =========================================================================
-   ProviderEntryActivity – DEBUG VERSION
-   ========================================================================= */
+/**
+ * ProviderEntryActivity
+ * ------------------------------------------------------------
+ * Handles both Sign-In and Sign-Up for Providers.
+ * Supports:
+ *  - Signup with Email optional
+ *  - Sign in with Email or Phone
+ *
+ *  Call: ProviderController for logic & database actions
+ *  Use: activity_provider_entry.xml
+ *
+ */
 public class ProviderEntryActivity extends AppCompatActivity
         implements ProviderController.ProviderControllerListener {
 
-    /* -------------------------- UI -------------------------- */
+    /* -------------------------- UI COMPONENTS -------------------------- */
     private TabLayout tabLayout;
     private View signInLayout, signUpLayout;
 
-    private TextInputEditText signInEmail, signInPassword;
+    // Sign-In fields
+    private TextInputEditText signInEmailOrPhone, signInPassword;
     private Button signInButton, signInCancelButton;
 
+    // Sign-Up fields
     private TextInputEditText signUpFullName, signUpEmail, signUpPhone;
     private TextInputEditText signUpAddress, signUpPassword, signUpConfirmPassword;
     private Button signUpButton, signUpCancelButton;
 
-    /* ----------------------- Firebase ----------------------- */
+    /* -------------------------- CONTROLLER ----------------------------- */
     private ProviderController providerController;
-    private FirebaseAuth auth;
-
     private ProgressDialog loadingDialog;
 
-    /* ===================================================================== */
+    /* -------------------------- LIFECYCLE ------------------------------ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_entry);
         setTitle("Provider Authentication");
 
-        auth = FirebaseAuth.getInstance();
-        providerController = new ProviderController();
+        // Initialize controller (acts as business logic layer)
+        providerController = new ProviderController(this);
         providerController.setListener(this);
 
+        // Prepare UI
         initializeViews();
         setupTabs();
         setupButtons();
+
+        // Default tab = Sign-In
         showSignIn();
     }
 
+    /* =========================================================
+       INITIALIZATION METHODS
+       ========================================================= */
     private void initializeViews() {
         tabLayout = findViewById(R.id.authTabLayout);
         signInLayout = findViewById(R.id.signInLayout);
         signUpLayout = findViewById(R.id.signUpLayout);
 
-        signInEmail = findViewById(R.id.signInEmail);
+        // Sign-In views
+        signInEmailOrPhone = findViewById(R.id.signInEmailOrPhone);
         signInPassword = findViewById(R.id.signInPassword);
         signInButton = findViewById(R.id.signInButton);
         signInCancelButton = findViewById(R.id.signInCancelButton);
 
+        // Sign-Up views
         signUpFullName = findViewById(R.id.signUpFullName);
         signUpEmail = findViewById(R.id.signUpEmail);
         signUpPhone = findViewById(R.id.signUpPhone);
@@ -82,6 +97,7 @@ public class ProviderEntryActivity extends AppCompatActivity
     }
 
     private void setupTabs() {
+        // Toggle between Sign-In and Sign-Up layouts
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) showSignIn(); else showSignUp();
@@ -96,9 +112,11 @@ public class ProviderEntryActivity extends AppCompatActivity
         signUpButton.setOnClickListener(v -> handleSignUp());
         signInCancelButton.setOnClickListener(v -> finish());
         signUpCancelButton.setOnClickListener(v -> finish());
-
     }
 
+    /* =========================================================
+       TAB SWITCHING
+       ========================================================= */
     private void showSignIn() {
         signInLayout.setVisibility(View.VISIBLE);
         signUpLayout.setVisibility(View.GONE);
@@ -109,39 +127,74 @@ public class ProviderEntryActivity extends AppCompatActivity
         signUpLayout.setVisibility(View.VISIBLE);
     }
 
-    /* --------------------------- SIGN-IN --------------------------- */
+    /* =========================================================
+       SIGN-IN LOGIC
+       ========================================================= */
     private void handleSignIn() {
-        String email = getText(signInEmail);
+        String emailOrPhone = getText(signInEmailOrPhone);
         String password = getText(signInPassword);
-        if (BuildConfig.DEBUG) {
-            Log.d("DEBUG_SIGNIN", "Attempting sign-in with:");
-            Log.d("DEBUG_SIGNIN", "Email    : '" + email + "'");
-            Log.d("DEBUG_SIGNIN", "Password : '" + password + "' (len=" + password.length() + ")");
-            Log.d("DEBUG_SIGNIN", "FirebaseAuth instance: " + auth);
+
+        // Validation
+        if (TextUtils.isEmpty(emailOrPhone)) {
+            signInEmailOrPhone.setError("Required");
+            return;
         }
-        if (!validateSignInInputs(email, password)) return;
+        if (TextUtils.isEmpty(password)) {
+            signInPassword.setError("Required");
+            return;
+        }
+
+        Log.d(TAG, "handleSignIn(): emailOrPhone=" + emailOrPhone);
 
         showLoading("Signing in...");
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(result -> {
-                    FirebaseUser user = auth.getCurrentUser();
-                    if (BuildConfig.DEBUG && user != null) {
-                        Log.d("DEBUG_SIGNIN", "Sign-in SUCCESS – UID: " + user.getUid());
-                    }
-                    providerController.loadProviderById(user.getUid());
-                })
-                .addOnFailureListener(e -> {
-                    hideLoading();
-                    Log.e("DEBUG_SIGNIN", "Sign-in FAILED", e);
-                    if (e instanceof com.google.firebase.auth.FirebaseAuthException) {
-                        FirebaseAuthException fae = (FirebaseAuthException) e;
-                        Log.e("DEBUG_SIGNIN", "Error code: " + fae.getErrorCode());
-                        Log.e("DEBUG_SIGNIN", "Error message: " + fae.getMessage());
-                    }
-                    onError("Authentication failed: " + e.getMessage());
-                });
+
+        // EMAIL LOGIN
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(emailOrPhone).matches()) {
+            Log.d(TAG, "handleSignIn(): detected EMAIL login");
+            providerController.signInWithEmail(emailOrPhone, password,
+                    new ProviderController.AuthCallback() {
+                        @Override
+                        public void onSuccess(String providerId) {
+                            Log.d(TAG, "signInWithEmail SUCCESS, providerId=" + providerId);
+                            hideLoading();
+                            // now load provider doc from Firestore
+                            providerController.loadProviderById(providerId);
+                        }
+
+                        @Override
+                        public void onError(String msg) {
+                            Log.e(TAG, "signInWithEmail ERROR: " + msg, new Exception("signInWithEmail"));
+                            hideLoading();
+                            // call the Activity's onError (this WON'T recurse now)
+                            ProviderEntryActivity.this.onError(msg);
+                        }
+                    });
+        } else {
+            // PHONE LOGIN
+            Log.d(TAG, "handleSignIn(): detected PHONE login");
+            providerController.signInWithPhone(emailOrPhone, password,
+                    new ProviderController.AuthCallback() {
+                        @Override
+                        public void onSuccess(String providerId) {
+                            Log.d(TAG, "signInWithPhone SUCCESS, providerId=" + providerId);
+                            hideLoading();
+                            providerController.loadProviderById(providerId);
+                        }
+
+                        @Override
+                        public void onError(String msg) {
+                            Log.e(TAG, "signInWithPhone ERROR: " + msg, new Exception("signInWithPhone"));
+                            hideLoading();
+                            ProviderEntryActivity.this.onError(msg);
+                        }
+                    });
+        }
     }
 
+
+    /* =========================================================
+       SIGN-UP LOGIC (EMAIL OPTIONAL)
+       ========================================================= */
     private void handleSignUp() {
         String fullName = getText(signUpFullName);
         String email    = getText(signUpEmail);
@@ -150,100 +203,19 @@ public class ProviderEntryActivity extends AppCompatActivity
         String password = getText(signUpPassword);
         String confirm  = getText(signUpConfirmPassword);
 
-        if (BuildConfig.DEBUG) {
-            Log.d("DEBUG_INPUT", "=== SIGN-UP INPUT DUMP ===");
-            Log.d("DEBUG_INPUT", "FullName : '" + fullName + "' (len=" + fullName.length() + ")");
-            Log.d("DEBUG_INPUT", "Email    : '" + email + "' (len=" + email.length() + ")");
-            Log.d("DEBUG_INPUT", "Phone    : '" + phone + "' (len=" + phone.length() + ")");
-            Log.d("DEBUG_INPUT", "Address  : '" + address + "' (len=" + address.length() + ")");
-            Log.d("DEBUG_INPUT", "Password : '" + password + "' (len=" + password.length() + ")");
-            Log.d("DEBUG_INPUT", "Confirm  : '" + confirm + "' (len=" + confirm.length() + ")");
-            Log.d("DEBUG_INPUT", "FirebaseAuth instance: " + auth);
-            Log.d("DEBUG_INPUT", "==================================");
-        }
-
+        // Validate all inputs
         if (!validateSignUpInputs(fullName, email, phone, address, password, confirm))
             return;
 
         showLoading("Creating account...");
 
-        if (TextUtils.isEmpty(email)) {
-            if (BuildConfig.DEBUG) Log.d("DEBUG_AUTH", "Starting ANONYMOUS sign-up");
-            auth.signInAnonymously()
-                    .addOnSuccessListener(result -> {
-                        FirebaseUser user = auth.getCurrentUser();
-                        assert user != null;
-                        if (BuildConfig.DEBUG) Log.d("DEBUG_AUTH", "ANONYMOUS SUCCESS – UID: " + user.getUid());
-                        saveProvider(user.getUid(), fullName, "", phone, address, password); // ✅ FIXED: added password
-                    })
-                    .addOnFailureListener(e -> {
-                        hideLoading();
-                        if (BuildConfig.DEBUG) Log.e("DEBUG_AUTH", "ANONYMOUS FAILED", e);
-                        resetSignUpFormWithError("Anonymous sign-up failed: " + e.getMessage());
-                    });
-        } else {
-            if (BuildConfig.DEBUG) Log.d("DEBUG_AUTH", "Starting EMAIL sign-up – email: " + email);
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(result -> {
-                        FirebaseUser user = auth.getCurrentUser();
-                        assert user != null;
-                        if (BuildConfig.DEBUG) Log.d("DEBUG_AUTH", "EMAIL SUCCESS – UID: " + user.getUid());
-                        saveProvider(user.getUid(), fullName, email, phone, address, password); //  FIXED: added password
-                    })
-                    .addOnFailureListener(e -> {
-                        hideLoading();
-                        if (BuildConfig.DEBUG) Log.e("DEBUG_AUTH", "EMAIL FAILED", e);
-                        if (e instanceof com.google.firebase.auth.FirebaseAuthUserCollisionException) {
-                            signUpEmail.setText("");
-                            signUpEmail.requestFocus();
-                            resetSignUpFormWithError("Email already in use – try another or leave blank.");
-                        } else {
-                            if (e instanceof com.google.firebase.auth.FirebaseAuthException) {
-                                FirebaseAuthException fae = (FirebaseAuthException) e;
-                                Log.e("DEBUG_AUTH", "Error code: " + fae.getErrorCode());
-                                Log.e("DEBUG_AUTH", "Error message: " + fae.getMessage());
-                            }
-                            resetSignUpFormWithError("Sign-up failed: " + e.getMessage());
-                        }
-                    });
-        }
+        // Sign up
+        providerController.signUp(fullName, email, phone, address, password);
     }
 
-
-
-    private void saveProvider(String uid, String fullName, String email,
-                              String phone, String address, String password) {
-        Provider provider = new Provider();
-        provider.setId(uid);
-        provider.setFullName(fullName);
-        provider.setEmail(email);
-        provider.setPhone(phone);
-        provider.setAddress(address);
-        provider.setPassword(password);
-
-        providerController.registerProvider(provider, new ProviderDatabase.OnProviderOperationListener() {
-            @Override
-            public void onSuccess(String message) {
-                if (BuildConfig.DEBUG) Log.d("DEBUG_FLOW", "Provider saved: " + message);
-                launchProviderDashboard(); //  Launch dashboard here
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                hideLoading();
-                resetSignUpFormWithError("Error saving provider: " + errorMessage);
-            }
-        });
-    }
-
-
-    /* --------------------------- VALIDATION --------------------------- */
-    private boolean validateSignInInputs(String email, String password) {
-        if (TextUtils.isEmpty(email)) { signInEmail.setError("Required"); return false; }
-        if (TextUtils.isEmpty(password)) { signInPassword.setError("Required"); return false; }
-        return true;
-    }
-
+    /* =========================================================
+       INPUT VALIDATION
+       ========================================================= */
     private boolean validateSignUpInputs(String fullName, String email, String phone,
                                          String address, String password, String confirm) {
         if (TextUtils.isEmpty(fullName)) { signUpFullName.setError("Required"); return false; }
@@ -258,7 +230,14 @@ public class ProviderEntryActivity extends AppCompatActivity
         return true;
     }
 
-    /* --------------------------- HELPERS --------------------------- */
+    /* =========================================================
+       UTILITIES & HELPERS
+       ========================================================= */
+    private String getText(TextInputEditText edit) {
+        Editable e = edit.getText();
+        return e != null ? e.toString().trim() : "";
+    }
+
     private void showLoading(String msg) {
         if (loadingDialog == null) {
             loadingDialog = new ProgressDialog(this);
@@ -272,44 +251,58 @@ public class ProviderEntryActivity extends AppCompatActivity
         if (loadingDialog != null && loadingDialog.isShowing()) loadingDialog.dismiss();
     }
 
-    private void resetSignUpFormWithError(String errorMessage) {
+    /* =========================================================
+       CONTROLLER CALLBACK IMPLEMENTATION
+       ========================================================= */
+    @Override
+    public void onProviderLoaded(Provider provider) {
         hideLoading();
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-        signUpPassword.setText("");
-        signUpConfirmPassword.setText("");
-        if (TextUtils.isEmpty(getText(signUpEmail))) {
-            signUpEmail.requestFocus();
-        } else {
-            signUpPassword.requestFocus();
+        Log.d("ProviderEntryActivity", "Provider loaded: " + provider.getId());
+
+        // Save provider session
+        SessionManager.saveProvider(this, provider.getId(), provider.getFullName());
+
+        // Wrap navigation in try-catch to isolate crash
+        try {
+            navigateToDashboard(provider);
+        } catch (Exception e) {
+            Log.e("NavigationError", "Failed to navigate to dashboard", e);
+            Toast.makeText(this, "Navigation error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
+    @Override
+    public void onSignUpSuccess(String providerId) {
+        hideLoading();
+        clearSignUpForm();
+        launchProviderDashboard();
+    }
+
+    @Override
+    public void onError(String msg) {
+        Log.d("onError", "Entered onError()");
+        hideLoading();
+
+        try {
+            String safeMsg = msg != null ? msg : "Unknown error";
+            Toast.makeText(ProviderEntryActivity.this, "EEEEEEError: " + safeMsg, Toast.LENGTH_LONG).show();
+            Log.d("onError", "Toast shown");
+        } catch (Exception e) {
+            Log.e("onError", "Toast crashed", e);
+        }
+    }
+
+    /* =========================================================
+       NAVIGATION HELPERS
+       ========================================================= */
     private void navigateToDashboard(Provider provider) {
+        Log.d("ProviderEntryActivity", "Navigating to dashboard for: " + provider.getFullName());
         Intent i = new Intent(this, ProviderDashboardActivity.class);
         i.putExtra("providerId", provider.getId());
         i.putExtra("providerName", provider.getFullName());
-        //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
-        //finish();
     }
 
-    private String getText(TextInputEditText edit) {
-        Editable e = edit.getText();
-        return e != null ? e.toString().trim() : "";
-    }
-
-    /* ------------------- ProviderControllerListener ------------------- */
-    @Override public void onProviderLoaded(Provider provider) {
-        hideLoading();
-        navigateToDashboard(provider);
-    }
-
-
-
-    @Override public void onError(String errorMessage) {
-        hideLoading();
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-    }
     private void clearSignUpForm() {
         signUpFullName.setText("");
         signUpEmail.setText("");
@@ -318,9 +311,11 @@ public class ProviderEntryActivity extends AppCompatActivity
         signUpPassword.setText("");
         signUpConfirmPassword.setText("");
     }
+
     private void launchProviderDashboard() {
         Intent intent = new Intent(this, ProviderDashboardActivity.class);
         startActivity(intent);
-        finish(); // Optional: close sign-up screen
+        finish();
     }
+
 }
