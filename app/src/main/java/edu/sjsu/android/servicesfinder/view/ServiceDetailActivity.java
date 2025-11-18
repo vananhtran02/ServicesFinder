@@ -3,9 +3,12 @@ package edu.sjsu.android.servicesfinder.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +61,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private RecyclerView reviewList;
     private ReviewAdapter reviewAdapter;
     private ServiceReviewDatabase reviewDb;
+    private Button addReviewButton;
     /*
     Entry point of the Activity. Initializes the layout, enables the back button in the ActionBar,
  * sets the title, and triggers the sequence of data extraction, view initialization, data binding, and action setup.
@@ -80,6 +84,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         displayServiceInfo();
         setupActionButtons();
         setupReviewsSection();                                          // Setup + Load reviews
+        setupAddReviewButton();
     }
 
     /** Retrieves service and provider data passed from previous activity */
@@ -87,6 +92,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         serviceId = intent.getStringExtra("serviceId");
+        Log.d("DETAIL", "serviceId=" + serviceId);
 
         // Service data
         serviceTitle = intent.getStringExtra("serviceTitle");
@@ -119,6 +125,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         emailButton = findViewById(R.id.emailButton);
         locationButton = findViewById(R.id.locationButton);
         reviewList = findViewById(R.id.reviewList);
+        addReviewButton = findViewById(R.id.addReviewButton);
     }
 
     /** Displays all service and provider info in UI */
@@ -280,6 +287,61 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setupAddReviewButton() {
+        addReviewButton.setOnClickListener(v -> showAddReviewDialog());
+    }
+
+    private void showAddReviewDialog() {
+        View view = getLayoutInflater().inflate(R.layout.dialog_add_review, null);
+
+        RatingBar ratingBar = view.findViewById(R.id.reviewRating);
+        EditText commentInput = view.findViewById(R.id.reviewComment);
+        EditText nameInput = view.findViewById(R.id.reviewName);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Write a Review")
+                .setView(view)
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    float rating = ratingBar.getRating();
+                    String comment = commentInput.getText().toString().trim();
+                    String name = nameInput.getText().toString().trim();
+
+                    if (rating == 0) {
+                        Toast.makeText(this, "Please select a rating", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    ServiceReview review = new ServiceReview(
+                            null,
+                            serviceId,
+                            name.isEmpty() ? "Anonymous" : name,
+                            rating,
+                            comment,
+                            System.currentTimeMillis()
+                    );
+
+                    if (reviewDb == null) {
+                        reviewDb = new ServiceReviewDatabase();
+                    }
+
+                    reviewDb.addReview(review, new ServiceReviewDatabase.OnReviewSavedListener() {
+                        @Override
+                        public void onReviewSaved() {
+                            Toast.makeText(ServiceDetailActivity.this, "Review add!", Toast.LENGTH_SHORT).show();
+                            loadReviewsForService(serviceId);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(ServiceDetailActivity.this, "Failed to add review", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
     /** NEW: call ServiceReviewDatabase to get reviews */
     private void loadReviewsForService(String serviceId) {
         reviewDb.getReviewsForService(serviceId, new ServiceReviewDatabase.OnReviewsLoadedListener() {
@@ -290,6 +352,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
             @Override
             public void onError(Exception e) {
+                Log.e("DETAIL", "Error loading reviews", e);
                 Toast.makeText(ServiceDetailActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
             }
         });

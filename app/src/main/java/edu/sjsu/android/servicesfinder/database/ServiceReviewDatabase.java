@@ -2,12 +2,12 @@ package edu.sjsu.android.servicesfinder.database;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.sjsu.android.servicesfinder.model.ServiceReview;
@@ -43,7 +43,6 @@ public class ServiceReviewDatabase {
 
         db.collection(COLLECTION_REVIEWS)
                 .whereEqualTo("serviceId", serviceId)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<ServiceReview> result = new ArrayList<>();
@@ -54,6 +53,9 @@ public class ServiceReviewDatabase {
                             result.add(review);
                         }
                     }
+
+                    Collections.sort(result, (a, b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
+
                     listener.onReviewsLoaded(result);
                 })
                 .addOnFailureListener(listener::onError);
@@ -65,7 +67,7 @@ public class ServiceReviewDatabase {
     public void addReview(@NonNull ServiceReview review,
                           @NonNull OnReviewSavedListener listener) {
 
-        Task<?> task = db.collection(COLLECTION_REVIEWS)
+        db.collection(COLLECTION_REVIEWS)
                 .add(review)
                 .addOnSuccessListener(docRef -> listener.onReviewSaved())
                 .addOnFailureListener(listener::onError);
