@@ -37,6 +37,7 @@
                 android:textColor="#212121"
                 android:layout_marginBottom="8dp" />
 
+
             <!-- Service Pricing -->
             <TextView
                 android:id="@+id/serviceDetailPricing"
@@ -183,6 +184,24 @@
                     android:textColor="@color/white"
                     android:layout_marginStart="4dp" />
             </LinearLayout>
+
+            <!-- Reviews section -->
+            <TextView
+                android:id="@+id/reviewsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

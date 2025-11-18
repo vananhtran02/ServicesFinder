@@ -9,8 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
+import java.util.List;
+
 import edu.sjsu.android.servicesfinder.R;
+import edu.sjsu.android.servicesfinder.database.ServiceReviewDatabase;
+import edu.sjsu.android.servicesfinder.model.ServiceReview;
 
 /**
  * ServiceDetailActivity - Shows complete service details with contact options
@@ -18,6 +26,7 @@ import edu.sjsu.android.servicesfinder.R;
 public class ServiceDetailActivity extends AppCompatActivity {
 
     // Service info
+    private String serviceId;
     private String serviceTitle;
     private String serviceDescription;
     private String servicePricing;
@@ -45,6 +54,10 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private Button callButton;
     private Button emailButton;
     private Button locationButton;
+
+    private RecyclerView reviewList;
+    private ReviewAdapter reviewAdapter;
+    private ServiceReviewDatabase reviewDb;
     /*
     Entry point of the Activity. Initializes the layout, enables the back button in the ActionBar,
  * sets the title, and triggers the sequence of data extraction, view initialization, data binding, and action setup.
@@ -66,11 +79,14 @@ public class ServiceDetailActivity extends AppCompatActivity {
         initializeViews();
         displayServiceInfo();
         setupActionButtons();
+        setupReviewsSection();                                          // Setup + Load reviews
     }
 
     /** Retrieves service and provider data passed from previous activity */
     private void getIntentExtras() {
         Intent intent = getIntent();
+
+        serviceId = intent.getStringExtra("serviceId");
 
         // Service data
         serviceTitle = intent.getStringExtra("serviceTitle");
@@ -102,6 +118,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         callButton = findViewById(R.id.callButton);
         emailButton = findViewById(R.id.emailButton);
         locationButton = findViewById(R.id.locationButton);
+        reviewList = findViewById(R.id.reviewList);
     }
 
     /** Displays all service and provider info in UI */
@@ -245,6 +262,37 @@ public class ServiceDetailActivity extends AppCompatActivity {
             locationButton.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    /** NEW: Setup RecyclerView + load reviews */
+    private void setupReviewsSection() {
+        // Nếu layout chưa có reviewList thì bỏ qua
+        if (reviewList == null) return;
+
+        reviewList.setLayoutManager(new LinearLayoutManager(this));
+        reviewAdapter = new ReviewAdapter();
+        reviewList.setAdapter(reviewAdapter);
+
+        reviewDb = new ServiceReviewDatabase();
+
+        if (serviceId != null && !serviceId.isEmpty()) {
+            loadReviewsForService(serviceId);
+        }
+    }
+
+    /** NEW: call ServiceReviewDatabase to get reviews */
+    private void loadReviewsForService(String serviceId) {
+        reviewDb.getReviewsForService(serviceId, new ServiceReviewDatabase.OnReviewsLoadedListener() {
+            @Override
+            public void onReviewsLoaded(List<ServiceReview> reviews) {
+                reviewAdapter.setReviews(reviews);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(ServiceDetailActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /** Formats a 10-digit phone number as (XXX) XXX-XXXX */
