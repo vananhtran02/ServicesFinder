@@ -137,7 +137,7 @@ public class ProviderServiceController {
         void onError(String error);
     }
 
-    /** Callback for service areas list */
+    // Callback for service areas list
     public interface ServiceAreaListener {
         void onLoaded(List<String> areas);
         void onError(String message);

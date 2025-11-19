@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("com.google.gms.google-services") version "4.4.0" apply false
+    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 android {
@@ -46,11 +46,11 @@ dependencies {
     implementation(libs.constraintlayout)
 
     // Firebase Firestore
-    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.firebaseui:firebase-ui-firestore:9.1.1")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.firestore)
+    implementation(libs.firebase.ui.firestore)
     // Firebase Storage
-    implementation("com.google.firebase:firebase-storage:22.0.1")
+    implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
 
 
@@ -59,11 +59,12 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Room components
-    implementation("androidx.room:room-runtime:2.8.3")
-    annotationProcessor("androidx.room:room-compiler:2.8.3")
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 
-    implementation ("com.github.bumptech.glide:glide:5.0.5")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+
+    implementation (libs.glide)
+    annotationProcessor (libs.glide.compiler)
 
 
 

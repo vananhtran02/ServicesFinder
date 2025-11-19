@@ -13,10 +13,10 @@ import java.util.Map;
 
 import edu.sjsu.android.servicesfinder.model.Catalogue;
 
-/**
+/* ******************************************************************************
  * Database class for READ-ONLY access to hardcoded catalogues
  * Handles all Firestore read operations for catalogues
- */
+ ********************************************************************************/
 public class CatalogueDatabase {
 
     private static final String TAG = "CatalogueDatabase";
@@ -29,10 +29,10 @@ public class CatalogueDatabase {
     }
 
 
-    /**
+    /* *****************************************************************************
      * Get catalogue map with embedded services (for dropdown)
      * Reads services array from inside catalogue documents
-     */
+     ************************************************************************************/
     public void getCatalogueMapWithEmbeddedServices(OnCatalogueMapLoadedListener listener) {
         db.collection(COLLECTION_CATALOGUES)
                 .get()
@@ -41,12 +41,14 @@ public class CatalogueDatabase {
 
                     for (QueryDocumentSnapshot doc : querySnapshot) {
                         // Get title (or use document ID as fallback)
+
                         String title = doc.getString("title");
                         if (title == null || title.isEmpty()) {
                             title = doc.getId();
                         }
 
                         // Get embedded services array
+                        @SuppressWarnings("unchecked")
                         List<String> services = (List<String>) doc.get("services");
                         //List<String> services = doc.get("services", new GenericTypeIndicator<List<String>>() {});
 
@@ -55,6 +57,7 @@ public class CatalogueDatabase {
                         if (services != null && !services.isEmpty()) {
                             catalogueMap.put(title, services);
                         }
+
                     }
 
                     listener.onSuccess(catalogueMap);

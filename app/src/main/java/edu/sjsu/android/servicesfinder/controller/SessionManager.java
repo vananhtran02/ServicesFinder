@@ -51,7 +51,7 @@ public final class SessionManager {
         Log.d(TAG, "Session cleared");
     }
 
-    // ✅ Alias method for readability (used by UI / Controller)
+    // Alias method for readability (used by UI / Controller)
     public static void clearSession(Context ctx) {
         clear(ctx);
     }

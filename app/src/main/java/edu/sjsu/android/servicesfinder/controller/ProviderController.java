@@ -123,8 +123,9 @@ public class ProviderController {
         void onSuccess(String providerId);
         void onError(String message);
     }
-
-    /** Email-based sign-in via FirebaseAuth */
+    /* *****************************************************************************************
+    // Email-based sign-in via FirebaseAuth
+    /* *****************************************************************************************/
     public void signInWithEmail(String email, String password, AuthCallback callback) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(result -> {
@@ -371,11 +372,11 @@ public class ProviderController {
                                     providerDatabase.cloneServices(oldUid, newUser.getUid(), new ProviderDatabase.OnProviderOperationListener() {
                                         @Override
                                         public void onSuccess(String msg) {
-                                            // ✅ Delete old Firestore provider document
+                                            // Delete old Firestore provider document
                                             providerDatabase.deleteProvider(oldUid, new ProviderDatabase.OnProviderOperationListener() {
                                                 @Override
                                                 public void onSuccess(String deletionMsg) {
-                                                    // ✅ Now delete old FirebaseAuth account
+                                                    // Now delete old FirebaseAuth account
                                                     auth.signInWithEmailAndPassword(oldProvider.getEmail(), oldProvider.getPassword())
                                                             .addOnSuccessListener(authResult -> {
                                                                 FirebaseUser oldUser = authResult.getUser();
@@ -428,7 +429,4 @@ public class ProviderController {
             }
         });
     }
-
-
-
 }

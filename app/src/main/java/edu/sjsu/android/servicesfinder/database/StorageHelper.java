@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-/**
+/* *****************************************************************************************************
  * StorageHelper
  *
  * Handles:
@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageReference;
  * Notes:
  *  - Firebase Storage is for binary files (images, videos, PDFs)
  *  - Firestore stores only the download URL (not the file itself)
- */
+ **********************************************************************************************************/
 public class StorageHelper {
 
     private static final String TAG = "StorageHelper";
@@ -31,14 +31,10 @@ public class StorageHelper {
     private static final StorageReference storageRef =
             FirebaseStorage.getInstance().getReference();
 
-    /**
-     * Uploads an image file to Firebase Storage.
-     *
-     * @param context      Activity context for UI dialogs
-     * @param imageUri     The file path on device (camera/gallery)
-     * @param providerId   The provider's unique ID (Firebase UID or custom ID)
-     * @param callback     Returns download URL (String) OR null on failure
-     */
+    // =======================================================================================
+    // Uploads an image file to Firebase Storage.
+    // =======================================================================================
+
     public static void uploadImageToFirebase(Context context, Uri imageUri,
                                              String providerId, OnSuccessListener<String> callback) {
 
@@ -84,9 +80,9 @@ public class StorageHelper {
                 });
     }
 
-    /**
-     * Converts confusing Firebase exceptions into friendly sentences.
-     */
+    // =======================================================================================
+    // Converts confusing Firebase exceptions into friendly sentences.
+    // =======================================================================================
     private static String getImageUploadErrorMessage(Exception e) {
         String message = e.getMessage();
         if (message == null) return "Unknown upload error";

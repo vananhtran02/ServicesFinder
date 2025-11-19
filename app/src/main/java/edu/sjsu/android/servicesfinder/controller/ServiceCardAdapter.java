@@ -1,5 +1,7 @@
 package edu.sjsu.android.servicesfinder.controller;
 
+import static android.provider.Settings.System.getString;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -180,12 +182,15 @@ public class ServiceCardAdapter extends RecyclerView.Adapter<ServiceCardAdapter.
             }
 
             // Provider
-            providerName.setText("Provider: " + provider.getFullName());
+
+            //providerName.setText("Provider: " + provider.getFullName());
+            providerName.setText(itemView.getContext().getString(R.string.provider_prefix, provider.getFullName()));
 
 
-             // Rating placeholder  (You can replace with average rating logic later)
+            // Rating placeholder  (You can replace with average rating logic later)
 
-            providerRating.setText("⭐ New");
+            //providerRating.setText("⭐ New");
+            providerRating.setText(itemView.getContext().getString(R.string.new_service));
             providerRating.setVisibility(View.VISIBLE);
 
             // Location derived from serviceArea OR provider address
@@ -256,10 +261,10 @@ public class ServiceCardAdapter extends RecyclerView.Adapter<ServiceCardAdapter.
             return availability.replace(", ", "/");
         }
 
-        /*
+        /* *******************************************************************************
          * Service category may look like:
          *   "Home: Plumbing, Electrical | Automotive: Tire Change"       "
-         */
+         **************************************************************************************/
         private String extractFirstCategory(String category) {
             if (category.contains(":")) {
                 return category.split(":")[0].trim();

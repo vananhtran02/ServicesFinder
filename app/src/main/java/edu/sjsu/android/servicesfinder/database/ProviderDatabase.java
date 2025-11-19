@@ -10,7 +10,7 @@ import java.util.Map;
 
 import edu.sjsu.android.servicesfinder.model.Provider;
 
-/**
+/* ***********************************************************************************************
  * ProviderDatabase - Data Access Layer for Provider operations
  *
  * Handles all Firestore operations for providers:
@@ -21,7 +21,7 @@ import edu.sjsu.android.servicesfinder.model.Provider;
  * - Manage provider services subcollection
  *
  * MVC ROLE: Database/Model layer
- */
+ *************************************************************************************************/
 public class ProviderDatabase {
     private static final String TAG = "ProviderDatabase";
     private static final String COLLECTION_PROVIDERS = "providers";
@@ -83,18 +83,15 @@ public class ProviderDatabase {
     // =========================================================
     public void addProvider(Provider provider, OnProviderOperationListener listener) {
         // Log the document path and payload before writing
-        Log.d(TAG, "Saving to /providers/" + provider.getId());
-        Log.d(TAG, "Payload: " + providerToMap(provider).toString());
-
         db.collection(COLLECTION_PROVIDERS)
                 .document(provider.getId())  // Use Firebase UID as document ID
                 .set(providerToMap(provider))
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Provider saved: " + provider.getId());
+                    // Log.d(TAG, "Provider saved: " + provider.getId());
                     listener.onSuccess("Provider saved");
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error adding provider", e);
+                    // Log.e(TAG, "Error adding provider", e);
                     listener.onError(e.getMessage());
                 });
     }
@@ -146,11 +143,6 @@ public class ProviderDatabase {
     // =========================================================
     // UPDATE PROVIDER FIELDS (in setting)
     // =========================================================
-
-    /**
-     * Updates specific fields of a provider document in Firestore.
-     * Accepts a UID and a map of fields to update.
-     */
     public void updateProviderFields(String providerId, Map<String, Object> updates, OnProviderOperationListener listener) {
         db.collection(COLLECTION_PROVIDERS)
                 .document(providerId)
@@ -228,6 +220,4 @@ public class ProviderDatabase {
                     listener.onError("Failed to clone services: " + e.getMessage());
                 });
     }
-
-
 }

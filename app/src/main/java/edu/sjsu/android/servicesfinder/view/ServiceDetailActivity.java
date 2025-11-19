@@ -39,10 +39,10 @@ public class ServiceDetailActivity extends AppCompatActivity {
     // === VIEW BINDING ===
     private ActivityServiceDetailBinding binding;
 
-    /*
-     * Entry point of the Activity. Initializes the layout, enables the back button in the ActionBar,
-     * sets the title, and triggers the sequence of data extraction, view initialization, data binding, and action setup.
-     */
+    //**********************************************************************************************************
+    //  Entry point of the Activity. Initializes the layout, enables the back button in the ActionBar,
+    //  sets the title, and triggers the sequence of data extraction, view initialization, data binding, and action setup.
+    //**********************************************************************************************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

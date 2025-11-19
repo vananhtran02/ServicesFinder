@@ -16,10 +16,10 @@ import java.util.Map;
 import edu.sjsu.android.servicesfinder.model.Provider;
 import edu.sjsu.android.servicesfinder.model.ProviderService;
 
-/**
+/* ***********************************************************************************************
  * Database class for fetching providers with their services
  * Used for home screen display
- */
+ *************************************************************************************************/
 public class ProviderServiceDatabase {
 
     private static final String TAG = "ProviderServiceDB";
@@ -29,10 +29,10 @@ public class ProviderServiceDatabase {
         this.db = FirestoreHelper.getInstance();
     }
 
-    /**
+    /* **********************************************************************************
      * Load all providers with their services
      * Returns a map of Provider -> List of ProviderService
-     */
+     ************************************************************************************/
     public void getAllProvidersWithServices(OnProvidersWithServicesLoadedListener listener) {
         db.collection(FirestoreHelper.COLLECTION_PROVIDERS)
                 .get()
@@ -87,10 +87,10 @@ public class ProviderServiceDatabase {
                 });
     }
 
-    /**
+    /* ***************************************************************************************
      * Search providers and services by keyword
      * Searches in: provider name, service title, service description, category, service area
-     */
+     ***************************************************************************************************/
     public void searchProvidersAndServices(String query, OnProvidersWithServicesLoadedListener listener) {
         if (query == null || query.trim().isEmpty()) {
             getAllProvidersWithServices(listener);
@@ -164,9 +164,9 @@ public class ProviderServiceDatabase {
                 });
     }
 
-    /**
-     * Load services by category
-     */
+    // =========================================================
+    // Load services by category
+    // =========================================================
     public void getProvidersByCategory(String category, OnProvidersWithServicesLoadedListener listener) {
         db.collection(FirestoreHelper.COLLECTION_PROVIDERS)
                 .get()
@@ -224,7 +224,6 @@ public class ProviderServiceDatabase {
     // =========================================================
     // HELPER METHODS
     // =========================================================
-
     private boolean serviceMatchesQuery(ProviderService service, Provider provider, String query) {
         if (service.getServiceTitle() != null &&
                 service.getServiceTitle().toLowerCase().contains(query)) {
@@ -290,8 +289,8 @@ public class ProviderServiceDatabase {
     }
 
     // =========================================================
-// FIRESTORE SAVE / UPDATE
-// =========================================================
+    // FIRESTORE SAVE / UPDATE
+    // =========================================================
 
     public void saveService(String providerId, ProviderService service,
                             OnServiceSaveListener listener) {

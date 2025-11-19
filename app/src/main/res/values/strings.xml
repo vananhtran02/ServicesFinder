@@ -6,4 +6,12 @@
     <string name="password_required">Password<sup>*</sup> (min 6 characters)</string>
     <string name="confirm_password">Confirm Password<sup>*</sup></string>
     <string name="required_field"><sup>*</sup>: Required field</string>
+    <string name="provider_prefix">Provider: %1$s</string>
+    <string name="new_service">⭐ New</string>
+    <plurals name="services_found">
+        <item quantity="one">%d service found</item>
+        <item quantity="other">%d services found</item>
+    </plurals>
+
+
 </resources>

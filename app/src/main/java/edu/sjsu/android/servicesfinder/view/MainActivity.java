@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import edu.sjsu.android.servicesfinder.R;
 import edu.sjsu.android.servicesfinder.controller.HomeController;
 import edu.sjsu.android.servicesfinder.controller.ServiceCardAdapter;
 import edu.sjsu.android.servicesfinder.databinding.ActivityMainBinding;
@@ -217,19 +218,19 @@ public class MainActivity extends AppCompatActivity
 
         switch (currentSortOption) {
             case PRICE_LOW_TO_HIGH:
-                Collections.sort(items, (a, b) ->
+                items.sort((a, b) ->
                         Double.compare(extractPrice(a.service.getPricing()),
                                 extractPrice(b.service.getPricing())));
                 break;
 
             case PRICE_HIGH_TO_LOW:
-                Collections.sort(items, (a, b) ->
+                items.sort((a, b) ->
                         Double.compare(extractPrice(b.service.getPricing()),
                                 extractPrice(a.service.getPricing())));
                 break;
 
             case MOST_RECENT:
-                Collections.sort(items, (a, b) ->
+                items.sort((a, b) ->
                         Long.compare(b.service.getTimestamp(),
                                 a.service.getTimestamp()));
                 break;
@@ -280,9 +281,8 @@ public class MainActivity extends AppCompatActivity
             binding.resultCountText.setVisibility(View.GONE);
         } else {
             binding.resultCountText.setVisibility(View.VISIBLE);
-            binding.resultCountText.setText(
-                    count + (count == 1 ? " service found" : " services found")
-            );
+            // binding.resultCountText.setText(count + (count == 1 ? " service found" : " services found"));
+            binding.resultCountText.setText(getResources().getQuantityString(R.plurals.services_found, count, count));
         }
     }
 

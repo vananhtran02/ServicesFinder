@@ -11,10 +11,11 @@ import java.util.List;
 
 import edu.sjsu.android.servicesfinder.model.Service;
 
-/**
+/* ***********************************************************************************
  * Database class for READ-ONLY access to hardcoded services
  * Handles all Firestore read operations for services
- */
+ * Used in CatalogueController
+ *******************************************************************************************/
 public class ServiceDatabase {
     private final FirebaseFirestore db;
 

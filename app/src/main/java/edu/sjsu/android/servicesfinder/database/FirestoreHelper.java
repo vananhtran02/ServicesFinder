@@ -8,18 +8,18 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.Date;
 
-/**
- * Helper class for common Firestore utilities and constants
- * Provides shared Firestore instance and utility methods
- */
+//******************************************************************************************
+// * Helper class for common Firestore utilities and constants
+// * Provides shared Firestore instance and utility methods
+//******************************************************************************************
 public class FirestoreHelper {
 
     private static final String TAG = "FirestoreHelper";    public static final String COLLECTION_PROVIDERS = "providers";
     private static FirebaseFirestore instance;
 
-    /**
-     * Get singleton Firestore instance
-     */
+    //******************************************************************************************
+    // Get singleton Firestore instance
+    //******************************************************************************************
     public static FirebaseFirestore getInstance() {
         if (instance == null) {
             instance = FirebaseFirestore.getInstance();
@@ -28,9 +28,9 @@ public class FirestoreHelper {
         return instance;
     }
 
-    /**
-     * Configure Firestore settings
-     */
+    //******************************************************************************************
+    // Configure Firestore settings
+    //******************************************************************************************
     private static void configureFirestore(FirebaseFirestore db) {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)  // Enable offline persistence
@@ -39,9 +39,9 @@ public class FirestoreHelper {
         Log.d(TAG, "Firestore configured with persistence enabled");
     }
 
-    /**
-     * Handle common Firestore errors
-     */
+    //******************************************************************************************
+    // Handle common Firestore errors
+    //******************************************************************************************
     public static String handleFirestoreError(Exception exception) {
         if (exception == null) {
             return "Unknown error occurred";
@@ -70,15 +70,16 @@ public class FirestoreHelper {
         }
     }
 
-       /**
-     * Check if string is valid (not null and not empty)
-     */
+     //******************************************************************************************
+     // Check if string is valid (not null and not empty)
+    //******************************************************************************************
     public static boolean isValidString(String value) {
         return value != null && !value.trim().isEmpty();
     }
-    /**
-     * Validate email format
-     */
+
+    //******************************************************************************************
+    // Validate email format
+    //******************************************************************************************
     public static boolean isValidEmail(String email) {
         if (!isValidString(email)) {
             return false;
@@ -86,9 +87,9 @@ public class FirestoreHelper {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    /**
-     * Validate phone format (basic check)
-     */
+    //******************************************************************************************
+    // Validate phone format (basic check)
+    //******************************************************************************************
     public static boolean isValidPhone(String phone) {
         if (!isValidString(phone)) {
             return false;
@@ -99,9 +100,9 @@ public class FirestoreHelper {
         return digitsOnly.length() == 10;
     }
 
-    /**
-     * Sanitize string input (trim and remove extra spaces)
-     */
+    //******************************************************************************************
+    // Sanitize string input (trim and remove extra spaces)
+    //******************************************************************************************
     public static String sanitizeString(String input) {
         if (input == null) {
             return "";

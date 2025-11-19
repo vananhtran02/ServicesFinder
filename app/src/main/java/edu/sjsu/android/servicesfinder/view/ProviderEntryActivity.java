@@ -61,11 +61,6 @@ public class ProviderEntryActivity extends AppCompatActivity
 
         // Apply phone formatters
         setupPhoneFormatters();
-
-        // Pre-fill for testing/demo
-        binding.signInEmailOrPhone.setText("vananh@gmail.com");
-        binding.signInPassword.setText("123456");
-
         // Default tab = Sign-In
         showSignIn();
     }
@@ -178,45 +173,36 @@ public class ProviderEntryActivity extends AppCompatActivity
             binding.signInPassword.setError("Required");
             return;
         }
-
-        Log.d(TAG, "handleSignIn(): emailOrPhone=" + emailOrPhone);
-
         showLoading("Signing in...");
 
         // EMAIL LOGIN
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(emailOrPhone).matches()) {
-            Log.d(TAG, "handleSignIn(): detected EMAIL login");
             providerController.signInWithEmail(emailOrPhone, password,
                     new ProviderController.AuthCallback() {
                         @Override
                         public void onSuccess(String providerId) {
-                            Log.d(TAG, "signInWithEmail SUCCESS, providerId=" + providerId);
                             hideLoading();
                             providerController.loadProviderById(providerId);
                         }
 
                         @Override
                         public void onError(String msg) {
-                            Log.e(TAG, "signInWithEmail ERROR: " + msg, new Exception("signInWithEmail"));
                             hideLoading();
                             ProviderEntryActivity.this.onError(msg);
                         }
                     });
         } else {
             // PHONE LOGIN
-            Log.d(TAG, "handleSignIn(): detected PHONE login");
             providerController.signInWithPhone(emailOrPhone, password,
                     new ProviderController.AuthCallback() {
                         @Override
                         public void onSuccess(String providerId) {
-                            Log.d(TAG, "signInWithPhone SUCCESS, providerId=" + providerId);
                             hideLoading();
                             providerController.loadProviderById(providerId);
                         }
 
                         @Override
                         public void onError(String msg) {
-                            Log.e(TAG, "signInWithPhone ERROR: " + msg, new Exception("signInWithPhone"));
                             hideLoading();
                             ProviderEntryActivity.this.onError(msg);
                         }
@@ -289,7 +275,6 @@ public class ProviderEntryActivity extends AppCompatActivity
     @Override
     public void onProviderLoaded(Provider provider) {
         hideLoading();
-        Log.d("ProviderEntryActivity", "Provider loaded: " + provider.getId());
 
         // Save provider session
         SessionManager.saveProvider(this, provider.getId(), provider.getFullName());
@@ -298,7 +283,6 @@ public class ProviderEntryActivity extends AppCompatActivity
         try {
             navigateToDashboard(provider);
         } catch (Exception e) {
-            Log.e("NavigationError", "Failed to navigate to dashboard", e);
             Toast.makeText(this, "Navigation error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
@@ -312,13 +296,11 @@ public class ProviderEntryActivity extends AppCompatActivity
 
     @Override
     public void onError(String msg) {
-        Log.d("onError", "Entered onError()");
         hideLoading();
 
         try {
             String safeMsg = msg != null ? msg : "Unknown error";
             Toast.makeText(ProviderEntryActivity.this, "EEEEEEError: " + safeMsg, Toast.LENGTH_LONG).show();
-            Log.d("onError", "Toast shown");
         } catch (Exception e) {
             Log.e("onError", "Toast crashed", e);
         }
@@ -328,7 +310,6 @@ public class ProviderEntryActivity extends AppCompatActivity
        NAVIGATION HELPERS
        ========================================================= */
     private void navigateToDashboard(Provider provider) {
-        Log.d("ProviderEntryActivity", "Navigating to dashboard for: " + provider.getFullName());
         Intent i = new Intent(this, ProviderDashboardActivity.class);
         i.putExtra("providerId", provider.getId());
         i.putExtra("providerName", provider.getFullName());

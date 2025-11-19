@@ -89,7 +89,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     selectedImageUri = result.getData().getData();
-                    Log.d(TAG, "Image selected from gallery: " + selectedImageUri);
                     Glide.with(this).load(selectedImageUri).into(binding.imagePreview);
                     binding.imagePreview.setVisibility(View.VISIBLE);
                 }
@@ -99,7 +98,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
             registerForActivityResult(new ActivityResultContracts.TakePicture(), success -> {
                 if (success) {
                     selectedImageUri = tempImageUri;
-                    Log.d(TAG, "Photo captured: " + selectedImageUri);
                     Glide.with(this).load(selectedImageUri).into(binding.imagePreview);
                     binding.imagePreview.setVisibility(View.VISIBLE);
                 }
@@ -157,35 +155,27 @@ public class ProviderDashboardActivity extends AppCompatActivity
     // SAVE SERVICE
     // =========================================================
     private void handleSave() {
-        Log.e(TAG, "========== HANDLE SAVE CALLED ==========");
-        System.out.println("========== HANDLE SAVE CALLED ==========");
-
-        // 1. Safely get providerId
+        // Safely get providerId
         String providerId = SessionManager.getProviderId(this);
 
         if (providerId == null) {
             providerId = getIntent().getStringExtra("providerId");
             if (providerId != null) {
                 SessionManager.saveProvider(this, providerId, getIntent().getStringExtra("providerName"));
-                Log.w(TAG, "Recovered providerId from Intent: " + providerId);
             }
         }
 
         if (providerId == null && FirebaseAuth.getInstance().getCurrentUser() != null) {
             providerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             SessionManager.saveProvider(this, providerId, SessionManager.getProviderName(this));
-            Log.w(TAG, "Recovered providerId from FirebaseAuth: " + providerId);
         }
 
         if (providerId == null) {
-            Log.e(TAG, "providerId is null. Aborting save.");
             Toast.makeText(this, "No provider ID found. Please log in again.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        Log.d(TAG, "Using providerId: " + providerId);
-
-        // 2. Collect user inputs
+        // Collect user inputs
         String title = FormHelper.getText(binding.serviceTitleInput);
         String description = FormHelper.getText(binding.descriptionInput);
         String pricing = FormHelper.getText(binding.pricingInput);
@@ -197,20 +187,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
         Map<String, Set<String>> selectedItems = catalogueDropdown.getSelectedItems();
         String category = FormHelper.formatCategoryFromSelection(selectedItems);
 
-        // 3. Log inputs
-        Log.d(TAG, "=== SAVE SERVICE DEBUG ===");
-        Log.d(TAG, "Title: " + title);
-        Log.d(TAG, "Description: " + description);
-        Log.d(TAG, "Pricing: " + pricing);
-        Log.d(TAG, "Area: " + area);
-        Log.d(TAG, "Availability: " + availability);
-        Log.d(TAG, "Contact Preference: " + contactPreference);
-        Log.d(TAG, "Category: " + category);
-        Log.d(TAG, "Image URI: " + selectedImageUri);
-        Log.d(TAG, "Provider ID: " + providerId);
-        Log.d(TAG, "==========================");
-
-        // 4. Validate inputs
+        // Validate inputs
         if (title.isEmpty()) {
             binding.serviceTitleInput.setError("Required");
             Toast.makeText(this, "Please enter service title", Toast.LENGTH_SHORT).show();
@@ -248,11 +225,9 @@ public class ProviderDashboardActivity extends AppCompatActivity
             String uriString = selectedImageUri.toString();
 
             if (uriString.startsWith("http://") || uriString.startsWith("https://")) {
-                Log.d(TAG, "Image already on Firebase, skipping upload");
                 saveServiceToFirestore(title, description, pricing, category,
                         area, availability, contactPreference, providerId, uriString);
             } else {
-                Log.d(TAG, "Uploading new image to Firebase...");
                 String finalProviderId = providerId;
                 StorageHelper.uploadImageToFirebase(this, selectedImageUri, providerId, imageUrl -> {
                     saveServiceToFirestore(title, description, pricing, category,
@@ -260,7 +235,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
                 });
             }
         } else {
-            Log.d(TAG, "No image selected — ask user confirmation");
             String finalProviderId1 = providerId;
             new AlertDialog.Builder(this)
                     .setTitle("No Image")
@@ -296,11 +270,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
     private void saveServiceToFirestore(String title, String description, String pricing,
                                         String category, String area, String availability,
                                         String contactPreference, String providerId, String imageUrl) {
-
-        Log.e("ProviderDashboard", "=== DEBUG: saveServiceToFirestore() called ===");
-
         if (providerId == null || providerId.isEmpty()) {
-            Log.e("ProviderDashboard", "ERROR: providerId is NULL. Aborting save.");
             Toast.makeText(this, "Error: No provider ID found (login/session issue).", Toast.LENGTH_LONG).show();
             return;
         }
@@ -320,18 +290,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
         service.setTimestamp(System.currentTimeMillis());
         if (editingServiceId != null) service.setId(editingServiceId);
 
-        Log.d("ProviderDashboard", "=== SERVICE DEBUG INFO ===");
-        Log.d("ProviderDashboard", "Title: " + title);
-        Log.d("ProviderDashboard", "Description: " + description);
-        Log.d("ProviderDashboard", "Pricing: " + pricing);
-        Log.d("ProviderDashboard", "Category: " + category);
-        Log.d("ProviderDashboard", "Area: " + area);
-        Log.d("ProviderDashboard", "Availability: " + availability);
-        Log.d("ProviderDashboard", "ContactPref: " + contactPreference);
-        Log.d("ProviderDashboard", "ImageUrl: " + imageUrl);
-        Log.d("ProviderDashboard", "ProviderID: " + providerId);
-        Log.d("ProviderDashboard", "==========================");
-
         ProgressDialog savingDialog = new ProgressDialog(this);
         savingDialog.setMessage("Saving service...");
         savingDialog.setCancelable(false);
@@ -343,7 +301,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
             public void onSuccess(String serviceId) {
                 savingDialog.dismiss();
                 Toast.makeText(ProviderDashboardActivity.this, "Service saved successfully!", Toast.LENGTH_SHORT).show();
-                Log.i("ProviderDashboard", "Service saved successfully! Firestore docId: " + serviceId);
                 clearForm();
                 finish();
             }
@@ -351,7 +308,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
             @Override
             public void onError(String error) {
                 savingDialog.dismiss();
-                Log.e("ProviderDashboard", "Service save failed: " + error);
                 Toast.makeText(ProviderDashboardActivity.this, "Save failed: " + error, Toast.LENGTH_LONG).show();
             }
         });
@@ -476,7 +432,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
     @Override
     public void onError(String errorMessage) {
         hideLoadingDialog();
-        Log.e(TAG, "Controller error: " + errorMessage);
         Toast.makeText(this, "Error loading catalogues: " + errorMessage, Toast.LENGTH_LONG).show();
         binding.catalogueDropdown.setText("Failed to load catalogues");
         binding.catalogueDropdown.setEnabled(false);
@@ -494,8 +449,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
             @Override
             public void onDraftLoaded(ProviderServiceController.ServiceDraft draft) {
                 editingServiceId = draft.getId();
-                Log.d(TAG, "Draft loaded - Document ID: " + editingServiceId);
-
                 binding.serviceTitleInput.setText(draft.getServiceTitle());
                 binding.descriptionInput.setText(draft.getDescription());
                 binding.pricingInput.setText(draft.getPricing());
@@ -534,7 +487,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
 
             @Override
             public void onError(String error) {
-                Log.e(TAG, "Failed to load draft: " + error);
                 Toast.makeText(ProviderDashboardActivity.this, "Failed to load draft", Toast.LENGTH_SHORT).show();
             }
         });
