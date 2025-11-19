@@ -192,10 +192,12 @@
             android:layout_weight="1"
             android:text="Want to supply services?"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeMaxTextSize="20sp"/>
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:autoSizeMinTextSize="16sp"
+            android:autoSizeMaxTextSize="50sp"/>
 
         <Button
             android:id="@+id/providerBtn"
