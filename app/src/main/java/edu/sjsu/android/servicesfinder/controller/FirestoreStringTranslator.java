@@ -202,8 +202,6 @@ public class FirestoreStringTranslator {
                     return localized;
                 }
             }
-
-            Log.e("TRACE_TRANSLATOR", "    ✗ NO MATCH after checking " + matchAttempts + " resources");
         } catch (Exception e) {
             Log.e("Translator", "Reflection error", e);
         }

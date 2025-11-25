@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
@@ -359,71 +360,19 @@ public class ServiceDetailActivity extends AppCompatActivity {
     // =========================================================
     // REVIEW SYSTEM
     // =========================================================
-    private void showAddReviewDialog__() {
-
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_review, null);
-        Log.e("DEBUG_REVIEW", "Inflated layout has " + ((ViewGroup) dialogView).getChildCount() + " children");
-
-
-        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
-        if (ratingBar == null) {
-            Log.e("CRASH", "RATINGBAR IS NULL — LAYOUT IS WRONG OR OLD!");
-            Toast.makeText(this, "FATAL: Layout is corrupted. Clean project!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        TextInputEditText commentInput = dialogView.findViewById(R.id.commentInput);
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(dialogView)
-                .create();
-
-        dialogView.findViewById(R.id.cancelButton).setOnClickListener(v -> dialog.dismiss());
-        dialogView.findViewById(R.id.submitButton).setOnClickListener(v -> {
-            float rating = ratingBar.getRating();
-            String comment = commentInput.getText().toString().trim();
-
-            if (rating == 0) {
-                Toast.makeText(this, getString(R.string.error_select_rating), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (comment.isEmpty()) {
-                commentInput.setError(getString(R.string.error_required));
-                return;
-            }
-
-            submitReview(rating, comment);
-            dialog.dismiss();
-        });
-
-        dialog.show();
-    }
     private void showAddReviewDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_review, null);
 
         // DEBUG: Check if the view was inflated correctly
         if (dialogView == null) {
-            Log.e("DEBUG_REVIEW", "dialogView is NULL! Inflation failed!");
             Toast.makeText(this, "ERROR: Dialog layout failed to inflate", Toast.LENGTH_LONG).show();
             return;
         }
 
-        // DEBUG: List all view IDs that actually exist in the inflated layout
-        Log.d("DEBUG_REVIEW", "=== ALL CHILD VIEWS IN DIALOG ===");
         logAllViewIds(dialogView);
 
         // Try to find the RatingBar
         RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
-
-        if (ratingBar == null) {
-            Log.e("DEBUG_REVIEW", "RATINGBAR IS NULL! ID NOT FOUND!");
-            Toast.makeText(this, "ERROR: RatingBar not found! Check XML id!", Toast.LENGTH_LONG).show();
-            return;
-        } else {
-            Log.d("DEBUG_REVIEW", "RatingBar FOUND successfully! Rating = " + ratingBar.getRating());
-        }
-
         TextInputEditText commentInput = dialogView.findViewById(R.id.commentInput);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -434,9 +383,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
         dialogView.findViewById(R.id.submitButton).setOnClickListener(v -> {
             float rating = ratingBar.getRating();
             String comment = Objects.requireNonNull(commentInput.getText()).toString().trim();
-
-            Log.d("DEBUG_REVIEW", "User submitted rating: " + rating + ", comment: " + comment);
-
             if (rating == 0) {
                 Toast.makeText(this, getString(R.string.error_select_rating), Toast.LENGTH_SHORT).show();
                 return;
@@ -474,10 +420,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
     }
     private void submitReview(float rating, String comment) {
-        Log.e("DEBUG_REVIEW", "Attempting to save review:");
-        Log.e("DEBUG_REVIEW", "providerId = " + providerId);
-        Log.e("DEBUG_REVIEW", "rating = " + rating);
-        Log.e("DEBUG_REVIEW", "comment = " + comment);
         // Get customer info (you'll need to implement customer authentication)
         String customerId = "customer_" + System.currentTimeMillis(); // Temporary
         String customerName = "Anonymous";  // Replace with actual customer name
@@ -511,7 +453,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
     private void loadProviderReviews() {
         if (providerId == null) {
-            Log.e("ServiceDetail", "providerId is null!");
             return;
         }
 

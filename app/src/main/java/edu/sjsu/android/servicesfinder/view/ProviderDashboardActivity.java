@@ -156,6 +156,14 @@ public class ProviderDashboardActivity extends AppCompatActivity
         // Set default contact preference
         binding.contactCall.setChecked(true);
 
+
+
+        binding.serviceTitleInput.setText("Computer Repair & Upgrade");
+        binding.descriptionInput.setText("Laptop repair, PC building, virus removal, RAM upgrade, SSD installation");
+        binding.pricingInput.setText("$70 flat diagnostic");
+
+
+
         // For Setting
         initializeSettingsIcons();
     }

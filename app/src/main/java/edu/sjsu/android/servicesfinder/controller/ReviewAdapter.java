@@ -53,7 +53,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         return reviews.size();
     }
 
-    static class ReviewViewHolder extends RecyclerView.ViewHolder {
+    public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         private final TextView customerName;
         private final RatingBar ratingBar;
         private final TextView comment;
@@ -74,6 +74,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             timestamp.setText(getTimeAgo(review.getTimestamp()));
         }
 
+        // Get time for customer review
         private String getTimeAgo(long timestamp) {
             long now = System.currentTimeMillis();
             long diff = now - timestamp;

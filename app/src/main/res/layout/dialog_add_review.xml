@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:backgroundTint="@color/sf_surface_variant"
     android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_title_add_review"
+        android:textColor="@color/sf_secondary"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -18,7 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_rating"
-        android:textSize="14sp"
+        android:textColor="@color/sf_on_error_container"
+        android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
     <RatingBar
@@ -28,13 +31,15 @@
         android:numStars="5"
         android:stepSize="1"
         android:rating="5"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_comment"
-        android:textSize="14sp"
+        android:textColor="@color/sf_on_error_container"
+        android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -65,12 +70,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_cancel"
+            style="@style/SecondaryButton"
             android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/PrimaryButton"
             android:text="@string/action_submit"/>
     </LinearLayout>
+
+
+
 </LinearLayout>

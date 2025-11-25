@@ -45,7 +45,7 @@
                 android:text="@string/_25"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#4CAF50"
+                android:textColor="@color/teal_700"
                 android:layout_marginBottom="16dp" />
 
             <!-- Divider -->
@@ -62,7 +62,7 @@
                 android:text="@string/description"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#212121"
+                android:textColor="@color/verydarkgray"
                 android:layout_marginBottom="8dp" />
 
             <!-- Description Text -->
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/professional_haircut_service"
                 android:textSize="14sp"
-                android:textColor="#666666"
+                android:textColor="@color/mediumgray"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="16dp" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hair_care_cut_color_styling"
                 android:textSize="13sp"
-                android:textColor="#666666"
+                android:textColor="@color/mediumgray"
                 android:layout_marginBottom="8dp" />
 
             <!-- Service Area -->
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/service_area_san_jose"
                 android:textSize="13sp"
-                android:textColor="#666666"
+                android:textColor="@color/mediumgray"
                 android:layout_marginBottom="8dp" />
 
             <!-- Availability -->
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/available_tue_wed"
                 android:textSize="13sp"
-                android:textColor="@color/grey"
+                android:textColor="@color/mediumgray"
                 android:layout_marginBottom="8dp" />
             <!-- Preferred Contact -->
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="💬 Preferred Contact: Call"
                 android:textSize="13sp"
-                android:textColor="@color/grey"
+                android:textColor="@color/mediumgray"
                 android:layout_marginBottom="24dp"
                 android:visibility="gone" />
 
@@ -203,10 +203,10 @@
             android:layout_marginTop="10dp"
             android:text="@string/action_add_review"
             android:textAllCaps="false"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:backgroundTint="@color/transparent"
             android:textColor="@color/peru"
-            android:drawableStart="@drawable/ic_review"
+            android:drawableStart="@drawable/ic_add_review"
             style="?android:attr/borderlessButtonStyle"/>
 
         <!-- Average Rating Display -->
@@ -215,13 +215,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_reviews"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/averageRatingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text=""
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -235,15 +244,6 @@
                 android:textSize="14sp"
                 android:textColor="@color/gray"/>
         </LinearLayout>
-
-        <!-- Reviews Header -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/label_reviews"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
 
         <!-- Reviews List (RecyclerView) -->
         <androidx.recyclerview.widget.RecyclerView
