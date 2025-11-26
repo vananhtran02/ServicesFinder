@@ -225,16 +225,7 @@ public class ServiceCardAdapter extends RecyclerView.Adapter<ServiceCardAdapter.
             }
             serviceLocation.setText(location);
 
-            // Availability (Mon,Tue -> Mon/Tue)
-            /*
-            if (service.getAvailability() != null && !service.getAvailability().isEmpty()) {
-                serviceAvailability.setText(formatAvailability(service.getAvailability()));
-                serviceAvailability.setVisibility(View.VISIBLE);
-            } else {
-                serviceAvailability.setVisibility(View.GONE);
-            }
-            */
-            // Availability (Mon,Tue → T2 · T3 · T6 in Vietnamese)
+            // Availability (Mon,Tue → local)
             if (service.getAvailability() != null && !service.getAvailability().isEmpty()) {
                 serviceAvailability.setText(
                         FirestoreStringTranslator.get(itemView.getContext())
@@ -244,18 +235,7 @@ public class ServiceCardAdapter extends RecyclerView.Adapter<ServiceCardAdapter.
             } else {
                 serviceAvailability.setVisibility(View.GONE);
             }
-
-
             // Category badge (take only first category segment)
-            /*
-            if (service.getCategory() != null && !service.getCategory().isEmpty()) {
-                String firstCategory = extractFirstCategory(service.getCategory());
-                categoryBadge.setText(firstCategory);
-                categoryBadge.setVisibility(View.VISIBLE);
-            } else {
-                categoryBadge.setVisibility(View.GONE);
-            }
-            */
             if (service.getCategory() != null && !service.getCategory().isEmpty()) {
                 // ADDED: Parse → Translate → Rebuild → Extract primary
                 HomeController controller = new HomeController(itemView.getContext());

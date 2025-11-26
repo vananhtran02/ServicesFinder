@@ -48,6 +48,7 @@ import edu.sjsu.android.servicesfinder.model.Catalogue;
 import edu.sjsu.android.servicesfinder.model.Provider;
 import edu.sjsu.android.servicesfinder.model.ProviderService;
 import edu.sjsu.android.servicesfinder.model.Service;
+import edu.sjsu.android.servicesfinder.util.ProToast;
 
 /* ******************************************************************************************************
  * ProviderDashboardActivity
@@ -134,7 +135,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
             public void onProviderLoaded(Provider provider) {}
             @Override
             public void onSignUpSuccess(String msg) {
-                Toast.makeText(ProviderDashboardActivity.this, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(ProviderDashboardActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onError(String errorMessage) {
@@ -185,7 +186,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
         }
 
         if (providerId == null) {
-            Toast.makeText(this, getString(R.string.error_no_provider_id), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.error_no_provider_id), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -200,7 +201,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
                 binding.mon, binding.tue, binding.wed, binding.thu,
                 binding.fri, binding.sat, binding.sun);
 
-        //String contactPreference = FormHelper.getSelectedContactPreference(binding.contactPreferenceGroup, this);
+
         String localizedContactPreference =
                 FormHelper.getSelectedContactPreference(binding.contactPreferenceGroup, this);
 
@@ -208,15 +209,6 @@ public class ProviderDashboardActivity extends AppCompatActivity
         String contactPreference =
                 FirestoreStringTranslator.get(this).reverseContactPreference(localizedContactPreference);
 
-
-        /*
-        Map<String, Set<String>> selectedItems = catalogueDropdown.getSelectedItems();
-        String category = FormHelper.formatCategoryFromSelection(selectedItems);
-        // SAVE ONLY ENGLISH KEYS
-        String categoryToSave = FirestoreStringTranslator.get(this)
-                .buildEnglishCategoryString(selectedItems);
-        */
-        // === KEEP YOUR EXISTING CODE (DO NOT DELETE) ===
         Map<String, Set<String>> selectedItems = catalogueDropdown.getSelectedItems();
         String category = FormHelper.formatCategoryFromSelection(selectedItems);
 
@@ -226,38 +218,41 @@ public class ProviderDashboardActivity extends AppCompatActivity
         String categoryToSave = FirestoreStringTranslator.get(this)
                 .buildEnglishCategoryString(englishSelection);
 
-
-
-
         if (title.isEmpty()) {
             binding.serviceTitleInput.setError(getString(R.string.error_required));
-            Toast.makeText(this, getString(R.string.validation_enter_title), Toast.LENGTH_SHORT).show();
-            return;
+            //Toast.makeText(this, getString(R.string.validation_enter_title), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_enter_title));
         }
         if (description.isEmpty()) {
             binding.descriptionInput.setError(getString(R.string.error_required));
-            Toast.makeText(this, getString(R.string.validation_enter_description), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_enter_description), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_enter_description));
             return;
         }
         if (pricing.isEmpty()) {
             binding.pricingInput.setError(getString(R.string.error_required));
-            Toast.makeText(this, getString(R.string.validation_enter_pricing), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_enter_pricing), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_enter_pricing));
             return;
         }
         if (area.equals("Select Service Area") || area.isEmpty()) {
-            Toast.makeText(this, getString(R.string.validation_select_area), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_select_area), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_select_area));
             return;
         }
         if (availability.isEmpty()) {
-            Toast.makeText(this, getString(R.string.validation_select_availability), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_select_availability), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_select_availability));
             return;
         }
         if (contactPreference.isEmpty()) {
-            Toast.makeText(this, getString(R.string.validation_select_contact), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_select_contact), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_select_contact));
             return;
         }
         if (category.isEmpty()) {
-            Toast.makeText(this, getString(R.string.validation_select_category), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.validation_select_category), Toast.LENGTH_SHORT).show();
+            ProToast.warning(this, getString(R.string.validation_select_category));
             return;
         }
 
@@ -318,7 +313,9 @@ public class ProviderDashboardActivity extends AppCompatActivity
         if (providerId == null || providerId.isEmpty()) {
             String context = getString(R.string.error_context_login_session);
             String message = getString(R.string.error_no_provider_id_1, context);
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            ProToast.error(this, message);
+
             return;
         }
 
@@ -347,10 +344,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
             @Override
             public void onSuccess(String serviceId) {
                 savingDialog.dismiss();
-                Toast.makeText(ProviderDashboardActivity.this,
-                        getString(R.string.success_service_saved),
-                        Toast.LENGTH_SHORT).show();
-
+                ProToast.success(ProviderDashboardActivity.this, getString(R.string.success_service_saved));
                 clearForm();
                 finish();
             }
@@ -358,10 +352,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
             @Override
             public void onError(String error) {
                 savingDialog.dismiss();
-                Toast.makeText(ProviderDashboardActivity.this,
-                        getString(R.string.error_service_save_failed, error),
-                        Toast.LENGTH_LONG).show();
-
+                ProToast.error(ProviderDashboardActivity.this, getString(R.string.error_service_save_failed));
             }
         });
     }

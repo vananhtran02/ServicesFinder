@@ -29,6 +29,7 @@ import edu.sjsu.android.servicesfinder.controller.ReviewAdapter;
 import edu.sjsu.android.servicesfinder.database.ReviewDatabase;
 import edu.sjsu.android.servicesfinder.databinding.ActivityServiceDetailBinding;
 import edu.sjsu.android.servicesfinder.model.Review;
+import edu.sjsu.android.servicesfinder.util.ProToast;
 
 //******************************************************************************************
 // * ServiceDetailActivity - Shows complete service details with contact options
@@ -254,10 +255,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 intent.setData(Uri.parse("tel:" + providerPhone));
                 startActivity(intent);
             } else {
-                Toast.makeText(this,
-                        getString(R.string.error_phone_unavailable),
-                        Toast.LENGTH_SHORT
-                ).show();
+                ProToast.error(this, getString(R.string.error_phone_unavailable));
             }
         });
 
@@ -275,14 +273,10 @@ public class ServiceDetailActivity extends AppCompatActivity {
                     startActivity(Intent.createChooser(intent,
                             getString(R.string.chooser_title_send_email)));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(this,
-                            getString(R.string.error_no_email_app),
-                            Toast.LENGTH_SHORT).show();
+                    ProToast.error(this, getString(R.string.error_no_email_app));
                 }
             } else {
-                Toast.makeText(this,
-                        getString(R.string.error_email_unavailable),
-                        Toast.LENGTH_SHORT).show();
+                ProToast.error(this, getString(R.string.error_email_unavailable));
             }
 
         });
@@ -302,10 +296,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
                     startActivity(browserIntent);
                 }
             } else {
-                Toast.makeText(this,
-                        getString(R.string.error_address_unavailable),
-                        Toast.LENGTH_SHORT
-                ).show();
+                ProToast.error(this, getString(R.string.error_address_unavailable));
             }
         });
 
@@ -365,7 +356,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
         // DEBUG: Check if the view was inflated correctly
         if (dialogView == null) {
-            Toast.makeText(this, "ERROR: Dialog layout failed to inflate", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "ERROR: Dialog layout failed to inflate", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -384,7 +375,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
             float rating = ratingBar.getRating();
             String comment = Objects.requireNonNull(commentInput.getText()).toString().trim();
             if (rating == 0) {
-                Toast.makeText(this, getString(R.string.error_select_rating), Toast.LENGTH_SHORT).show();
+                ProToast.warning(this, getString(R.string.error_select_rating));
                 return;
             }
 
@@ -409,9 +400,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 int id = child.getId();
                 if (id != View.NO_ID) {
                     String idName = getResources().getResourceEntryName(id);
-                    Log.d("DEBUG_REVIEW", "Found view with ID: " + idName);
                 } else {
-                    Log.d("DEBUG_REVIEW", "Found view with NO ID");
                 }
                 if (child instanceof ViewGroup) {
                     logAllViewIds(child); // recursive
@@ -436,17 +425,13 @@ public class ServiceDetailActivity extends AppCompatActivity {
         reviewDatabase.saveReview(review, new ReviewDatabase.OnReviewSaveListener() {
             @Override
             public void onSuccess(String reviewId) {
-                Toast.makeText(ServiceDetailActivity.this,
-                        getString(R.string.success_review_submitted),
-                        Toast.LENGTH_SHORT).show();
+                ProToast.success(ServiceDetailActivity.this, getString(R.string.success_review_submitted));
                 loadProviderReviews(); // Reload to show new review
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ServiceDetailActivity.this,
-                        getString(R.string.error_review_submit_failed),
-                        Toast.LENGTH_SHORT).show();
+                ProToast.error(ServiceDetailActivity.this, getString(R.string.error_review_submit_failed));
             }
         });
     }

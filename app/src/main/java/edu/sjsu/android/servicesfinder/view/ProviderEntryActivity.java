@@ -65,6 +65,8 @@ public class ProviderEntryActivity extends AppCompatActivity
         setupPhoneFormatters();
 
         // Default tab = Sign-In
+        binding.signInEmailOrPhone.setText("6692067934");
+        binding.signInPassword.setText("123456");
 
         showSignIn();
     }
@@ -308,7 +310,7 @@ public class ProviderEntryActivity extends AppCompatActivity
         } catch (Exception e) {
             Toast.makeText(this,
                     getString(R.string.error_navigation, e.getMessage()),
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
             ).show();
 
         }
@@ -328,7 +330,7 @@ public class ProviderEntryActivity extends AppCompatActivity
         try {
             String safeMsg = msg != null ? msg : getString(R.string.error_unknown);
             String formatted = getString(R.string.error_generic, safeMsg);
-            Toast.makeText(ProviderEntryActivity.this, formatted, Toast.LENGTH_LONG).show();
+            Toast.makeText(ProviderEntryActivity.this, formatted, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //Log.e("onError", "Toast crashed", e);
         }

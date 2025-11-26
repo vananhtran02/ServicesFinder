@@ -16,6 +16,7 @@
     import edu.sjsu.android.servicesfinder.database.ProviderDatabase;
     import edu.sjsu.android.servicesfinder.databinding.EditProfileSettingBinding;
     import edu.sjsu.android.servicesfinder.model.Provider;
+    import edu.sjsu.android.servicesfinder.util.ProToast;
 
     /* *******************************************************************************************
      * EditProfileActivity - Allows provider to edit name, email, phone, and address.
@@ -51,12 +52,12 @@
             controller.setListener(new ProviderController.ProviderControllerListener() {
                 @Override
                 public void onSignUpSuccess(String message) {
-                    Toast.makeText(EditProfileActivity.this, getString(R.string.success_profile_updated), Toast.LENGTH_SHORT).show();
+                    ProToast.success(EditProfileActivity.this, getString(R.string.success_profile_updated));
                     finish();
                 }
                 @Override
                 public void onError(String msg) {
-                    Toast.makeText(EditProfileActivity.this, getString(R.string.error_generic, msg), Toast.LENGTH_LONG).show();
+                    ProToast.error(EditProfileActivity.this, getString(R.string.error_generic));
                 }
 
                 @Override
