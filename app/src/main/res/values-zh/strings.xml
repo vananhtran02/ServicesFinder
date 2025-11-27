@@ -13,7 +13,7 @@
     <string name="search_icon">🔍</string>
     <string name="no_services_available">暂无可用服务</string>
     <string name="want_to_supply_services">想要提供服务？</string>
-    <string name="provider_access">服务商入口</string>
+    <string name="provider_register">注册</string>
 
     <plurals name="services_found">
         <item quantity="other">找到 %d 个服务</item>

@@ -9,7 +9,7 @@
     <string name="search_icon">🔍</string>
     <string name="no_services_available">No hay servicios disponibles</string>
     <string name="want_to_supply_services">¿Quieres ofrecer servicios?</string>
-    <string name="provider_access">Acceso de Proveedor</string>
+    <string name="provider_register">Registrarse</string>
 
     <plurals name="services_found">
         <item quantity="one">%d servicio encontrado</item>

@@ -203,7 +203,7 @@
             android:id="@+id/providerBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/provider_access"
+            android:text="@string/provider_register"
             android:textColor="?attr/colorOnSecondary"
             android:textStyle="bold"
             android:backgroundTint="?attr/colorSecondary"

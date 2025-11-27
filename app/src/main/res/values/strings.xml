@@ -13,7 +13,7 @@
     <string name="search_icon">🔍</string>
     <string name="no_services_available">No services available</string>
     <string name="want_to_supply_services">Want to supply services?</string>
-    <string name="provider_access">Provider Access</string>
+    <string name="provider_register">Register</string>
 
     <plurals name="services_found">
         <item quantity="one">%d service found</item>
