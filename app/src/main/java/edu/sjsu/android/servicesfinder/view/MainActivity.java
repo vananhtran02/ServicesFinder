@@ -8,6 +8,7 @@
     import android.text.TextWatcher;
     import android.util.Log;
     import android.view.View;
+    import android.widget.Toast;
 
     import androidx.annotation.Nullable;
     import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@
 
     public class MainActivity extends AppCompatActivity
             implements HomeController.HomeControllerListener,
+
             ServiceCardAdapter.OnServiceClickListener {
 
         private static final int SEARCH_DELAY_MS = 300;
@@ -66,7 +68,6 @@
             setupSearchBox();
             setupFilterChips();
             setupProviderButton();
-
             showLoading();
             homeController.loadAllProvidersWithServices();
         }
@@ -86,6 +87,7 @@
             categoryMap.put("Pet Services", getString(R.string.cat_pet_services));
             categoryMap.put("Tech & Digital Services", getString(R.string.cat_tech_digital_services));
             categoryMap.put("Education Services", getString(R.string.cat_education_services));
+            categoryMap.put("Nail Services", getString(R.string.cat_nail_services));
         }
 
         // ============================================================
@@ -244,16 +246,6 @@
         // ============================================================
         @Override
         public void onProvidersWithServicesLoaded(Map<Provider, List<ProviderService>> map) {
-            // debug
-            Log.e("CAT_UI_FINAL", "Number of providers returned = " + map.size());
-            for (Map.Entry<Provider, List<ProviderService>> entry : map.entrySet()) {
-                for (ProviderService service : entry.getValue()) {
-                    Log.e("CAT_UI_FINAL", "FINAL DISPLAY: " + service.getServiceTitle()
-                            + " | cat=" + service.getCategory());
-                }
-            }
-            // end debug
-
             if (map.isEmpty()) showEmptyState(getString(R.string.empty_state_no_services));
             else {
                 showContent();

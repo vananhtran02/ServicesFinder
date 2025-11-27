@@ -12,6 +12,7 @@
     <string name="cat_pet_services">Dịch vụ thú cưng</string>
     <string name="cat_tech_digital_services">Dịch vụ công nghệ &amp; kỹ thuật số</string>
     <string name="cat_education_services">Dịch vụ giáo dục</string>
+    <string name="cat_nail_services">Dịch vụ làm móng</string>
 
     <!-- SERVICES - Automotive -->
     <string name="svc_car_wash">Rửa xe</string>
@@ -88,4 +89,14 @@
     <string name="svc_music_lesson">Dạy nhạc (piano, guitar)</string>
     <string name="svc_art_drawing">Vẽ &amp; mỹ thuật</string>
     <string name="svc_language_lessons">Học ngoại ngữ (Tây Ban Nha, Pháp)</string>
+
+    <!-- Nail -->
+
+    <string name="svc_manicure">Làm móng tay</string>
+    <string name="svc_pedicure">Làm móng chân</string>
+    <string name="svc_gel">Móng gel</string>
+    <string name="svc_acrylic">Móng acrylic</string>
+    <string name="svc_nail_art">Nghệ thuật móng</string>
+    <string name="svc_french_tips">Móng kiểu Pháp</string>
+
 </resources>

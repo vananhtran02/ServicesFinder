@@ -18,6 +18,11 @@ public class Catalogue {
     public Catalogue(String title) {
         this.title = title;
     }
+    // Constructor with id and title (needed for database)
+    public Catalogue(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
     // Getters and setters
     public int getId() { return id; }

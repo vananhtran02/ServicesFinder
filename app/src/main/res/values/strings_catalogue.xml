@@ -12,6 +12,7 @@
     <string name="cat_pet_services">Pet Services</string>
     <string name="cat_tech_digital_services">Tech &amp; Digital Services</string>
     <string name="cat_education_services">Education Services</string>
+    <string name="cat_nail_services">Nail Services</string>
 
     <!-- SERVICES - Automotive -->
     <string name="svc_car_wash">Car wash</string>
@@ -88,4 +89,12 @@
     <string name="svc_music_lesson">Music lesson (piano, guitar)</string>
     <string name="svc_art_drawing">Art &amp; drawing</string>
     <string name="svc_language_lessons">Language lessons (Spanish, French)</string>
+
+    <!-- Nail -->
+    <string name="svc_manicure">Manicure</string>
+    <string name="svc_pedicure">Pedicure</string>
+    <string name="svc_gel">Gel</string>
+    <string name="svc_acrylic">Acrylic</string>
+    <string name="svc_nail_art">Nail Art</string>
+    <string name="svc_french_tips">French Tips</string>
 </resources>

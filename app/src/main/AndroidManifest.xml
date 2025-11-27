@@ -54,6 +54,9 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".view.MainActivity" />
         </activity>
+
+
+
     </application>
 
 </manifest>

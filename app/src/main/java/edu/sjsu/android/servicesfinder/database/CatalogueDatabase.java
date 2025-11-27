@@ -3,6 +3,7 @@ package edu.sjsu.android.servicesfinder.database;
 import android.util.Log;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -23,6 +24,7 @@ public class CatalogueDatabase {
     private static final String COLLECTION_CATALOGUES = "catalogues";
 
     private final FirebaseFirestore db;
+    private ListenerRegistration cataloguesListener;
 
     public CatalogueDatabase() {
         this.db = FirebaseFirestore.getInstance();
@@ -63,8 +65,10 @@ public class CatalogueDatabase {
                     listener.onError(e.getMessage());
                 });
     }
+
     public interface OnCatalogueMapLoadedListener {
         void onSuccess(Map<String, List<String>> catalogueMap);
+
         void onError(String errorMessage);
     }
 }

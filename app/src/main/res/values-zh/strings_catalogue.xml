@@ -12,6 +12,7 @@
     <string name="cat_pet_services">宠物服务</string>
     <string name="cat_tech_digital_services">科技与数字服务</string>
     <string name="cat_education_services">教育服务</string>
+    <string name="cat_nail_services">美甲服务</string>
 
     <!-- SERVICES -->
     <string name="svc_car_wash">洗车</string>
@@ -74,11 +75,18 @@
     <string name="svc_graphic_design">平面设计</string>
     <string name="svc_wi_fi_network_repair">Wi-Fi/网络维修</string>
 
-
-
     <string name="svc_private_tutoring">一对一家教</string>
     <string name="svc_online_tutoring">在线家教</string>
     <string name="svc_music_lesson">音乐课（钢琴、吉他）</string>
     <string name="svc_art_drawing">绘画美术</string>
     <string name="svc_language_lessons">语言课程（西班牙语、法语）</string>
+
+    <string name="svc_manicure">美甲</string>
+    <string name="svc_pedicure">足部美甲</string>
+    <string name="svc_gel">光疗甲</string>
+    <string name="svc_acrylic">丙烯甲</string>
+    <string name="svc_nail_art">美甲艺术</string>
+    <string name="svc_french_tips">法式美甲</string>
+
+
 </resources>

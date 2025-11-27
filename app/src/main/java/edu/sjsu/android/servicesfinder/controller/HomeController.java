@@ -154,13 +154,6 @@ public class HomeController {
         });
     }
 
-
-
-
-
-
-
-
     //* ****************************************************************
     //* Filter by category (check CAT has : ito know provider has service of CAT or not
     //*****************************************************************
