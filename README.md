@@ -107,10 +107,8 @@ app/
 ### Using Android Studio:
 1. Clone repo  
 2. Open project  
-3. Add **google-services.json** to `/app`  
-4. Build & Run  
-5. Create provider account  
-6. Firestore collections auto-populate  
+3. Build & Run  
+4. Firestore collections auto-populate  
 
 ---
 
