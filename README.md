@@ -47,55 +47,54 @@ Providers can:
 ## Project Structure
 app/
 ├── java/
-│ ├── edu.sjsu.android.servicesfinder/
-│ │ ├── controller/
-│ │ │ ├── CatalogueController.java
-│ │ │ ├── FirestoreStringTranslator.java
-│ │ │ ├── FormHelper.java
-│ │ │ ├── HomeController.java
-│ │ │ ├── ProviderController.java
-│ │ │ ├── ProviderServiceController.java
-│ │ │ ├── ReviewAdapter.java
-│ │ │ ├── ServiceCardAdapter.java
-│ │ │ ├── SessionManager.java
-│ │ │ └── UIHelper.java
-│ │ │
-│ │ ├── database/
-│ │ │ ├── CatalogueDatabase.java
-│ │ │ ├── FirestoreHelper.java
-│ │ │ ├── ProviderDatabase.java
-│ │ │ ├── ProviderServiceDatabase.java
-│ │ │ ├── ReviewDatabase.java
-│ │ │ ├── ServiceDatabase.java
-│ │ │ └── StorageHelper.java
-│ │ │
-│ │ ├── model/
-│ │ │ ├── Catalogue.java
-│ │ │ ├── Provider.java
-│ │ │ ├── ProviderService.java
-│ │ │ ├── Review.java
-│ │ │ └── Service.java
-│ │ │
-│ │ ├── util/
-│ │ │ └── ProToast.java
-│ │ │
-│ │ └── view/
-│ │ ├── EditProfileActivity.java
-│ │ ├── MainActivity.java
-│ │ ├── MultiSelectDropdown.java
-│ │ ├── ProviderDashboardActivity.java
-│ │ ├── ProviderEntryActivity.java
-│ │ └── ServiceDetailActivity.java
-│ │
-│ └── (Android auto-generated)
+│   ├── edu.sjsu.android.servicesfinder/
+│   │   ├── controller/
+│   │   │   ├── CatalogueController.java
+│   │   │   ├── FirestoreStringTranslator.java
+│   │   │   ├── FormHelper.java
+│   │   │   ├── HomeController.java
+│   │   │   ├── ProviderController.java
+│   │   │   ├── ProviderServiceController.java
+│   │   │   ├── ReviewAdapter.java
+│   │   │   ├── ServiceCardAdapter.java
+│   │   │   ├── SessionManager.java
+│   │   │   └── UIHelper.java
+│   │   │
+│   │   ├── database/
+│   │   │   ├── CatalogueDatabase.java
+│   │   │   ├── FirestoreHelper.java
+│   │   │   ├── ProviderDatabase.java
+│   │   │   ├── ProviderServiceDatabase.java
+│   │   │   ├── ReviewDatabase.java
+│   │   │   ├── ServiceDatabase.java
+│   │   │   └── StorageHelper.java
+│   │   │
+│   │   ├── model/
+│   │   │   ├── Catalogue.java
+│   │   │   ├── Provider.java
+│   │   │   ├── ProviderService.java
+│   │   │   ├── Review.java
+│   │   │   └── Service.java
+│   │   │
+│   │   ├── util/
+│   │   │   └── ProToast.java
+│   │   │
+│   │   └── view/
+│   │       ├── EditProfileActivity.java
+│   │       ├── MainActivity.java
+│   │       ├── MultiSelectDropdown.java
+│   │       ├── ProviderDashboardActivity.java
+│   │       ├── ProviderEntryActivity.java
+│   │       └── ServiceDetailActivity.java
+│   │
+│   └── (Android auto-generated)
 │
 └── res/
-├── layout/
-├── values/
-├── drawable/
-├── mipmap/
-└── xml/
-
+    ├── layout/
+    ├── values/
+    ├── drawable/
+    ├── mipmap/
+    └── xml/
 
 ---
 
