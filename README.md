@@ -115,3 +115,4 @@ app/
 **Course:** CS 175 – Android Mobile Development  
 **Professor:** Yan Chen  
 **Semester:** Fall 2025
+
