@@ -1,101 +1,115 @@
-ServicesFinder - Version 1.0
+# ServicesFinder - Version 1.0
 
-Team Number: 09
-Team Members and Contributions
-Version 1.0
-Name	Contribution
-Van Anh Tran	Implemented category filtering engine, debugging category-key logic, Firestore data modeling for provider services, phone normalization rules
-Ben Nguyen	Designed signup and provider entry UI layouts, category chips UI style, implemented tab layout for sign-in/sign-up
-Nhat Anh Nguyen	Implemented service detail view and navigation transitions, tested filtering and search behaviors
-Phuong Tong	Integrated ProviderDashboardActivity, implemented update profile logic, Firestore save operations, final review & bug fixes
+### Team Number: 09  
 
-Project Description
+---
 
-This is Version 1.0 of the ServicesFinder Android app, designed to connect local service providers with users looking for real-world services such as Hair Care, Nail Services, Automotive Repair, Education Services, Pet Care, etc.
+## Team Members and Contributions  
+### Version 1.0
 
-Users can browse available services, search by category or text keywords, view provider details, and contact providers.
-Providers can sign up, add multiple services, set pricing, and manage their profile.
+| Name | Contribution |
+|------|--------------|
+| **Van Anh Tran** | Implemented category filtering engine, debugging category-key logic, Firestore data modeling for provider services, phone normalization rules |
+| **Ben Nguyen** | Designed signup and provider entry UI layouts, category chips UI style, implemented tab layout for sign-in/sign-up |
+| **Nhat Anh Nguyen** | Implemented service detail view and navigation transitions, tested filtering and search behaviors |
+| **Phuong Tong** | Integrated ProviderDashboardActivity, implemented update profile logic, Firestore save operations, final review & bug fixes |
 
-Technical Requirements
+---
 
-Android Studio
+## Project Description  
+This is Version 1.0 of the **ServicesFinder** Android app, designed to connect local service providers with users looking for real-world services such as **Hair Care, Nail Services, Automotive Repair, Education Services, Pet Care**, etc.
 
-Java
+Users can:  
+- browse services  
+- search by category or keyword  
+- view provider details  
+- contact providers  
 
-Firebase Authentication
+Providers can:  
+- register by phone or email  
+- add multiple services  
+- edit their profile  
+- delete their account  
 
-Firebase Firestore
+---
 
-Firebase Storage
+## Technical Requirements
 
-MinSDK: 24+
+- Android Studio  
+- Java  
+- Firebase Authentication  
+- Firebase Firestore  
+- Firebase Storage  
+- MinSDK: 24+  
 
-Project Structure
+---
+
+## Project Structure
 app/
 ├── java/
-│   ├── edu.sjsu.android.servicesfinder/
-│   │   ├── controller/
-│   │   │   ├── CatalogueController.java
-│   │   │   ├── FirestoreStringTranslator.java
-│   │   │   ├── FormHelper.java
-│   │   │   ├── HomeController.java
-│   │   │   ├── ProviderController.java
-│   │   │   ├── ProviderServiceController.java
-│   │   │   ├── ReviewAdapter.java
-│   │   │   ├── ServiceCardAdapter.java
-│   │   │   ├── SessionManager.java
-│   │   │   └── UIHelper.java
-│   │   │
-│   │   ├── database/
-│   │   │   ├── CatalogueDatabase.java
-│   │   │   ├── FirestoreHelper.java
-│   │   │   ├── ProviderDatabase.java
-│   │   │   ├── ProviderServiceDatabase.java
-│   │   │   ├── ReviewDatabase.java
-│   │   │   ├── ServiceDatabase.java
-│   │   │   └── StorageHelper.java
-│   │   │
-│   │   ├── model/
-│   │   │   ├── Catalogue.java
-│   │   │   ├── Provider.java
-│   │   │   ├── ProviderService.java
-│   │   │   ├── Review.java
-│   │   │   └── Service.java
-│   │   │
-│   │   ├── util/
-│   │   │   └── ProToast.java
-│   │   │
-│   │   └── view/
-│   │       ├── EditProfileActivity.java
-│   │       ├── MainActivity.java
-│   │       ├── MultiSelectDropdown.java
-│   │       ├── ProviderDashboardActivity.java
-│   │       ├── ProviderEntryActivity.java
-│   │       └── ServiceDetailActivity.java
-│   │
-│   └── (Android auto-generated)
+│ ├── edu.sjsu.android.servicesfinder/
+│ │ ├── controller/
+│ │ │ ├── CatalogueController.java
+│ │ │ ├── FirestoreStringTranslator.java
+│ │ │ ├── FormHelper.java
+│ │ │ ├── HomeController.java
+│ │ │ ├── ProviderController.java
+│ │ │ ├── ProviderServiceController.java
+│ │ │ ├── ReviewAdapter.java
+│ │ │ ├── ServiceCardAdapter.java
+│ │ │ ├── SessionManager.java
+│ │ │ └── UIHelper.java
+│ │ │
+│ │ ├── database/
+│ │ │ ├── CatalogueDatabase.java
+│ │ │ ├── FirestoreHelper.java
+│ │ │ ├── ProviderDatabase.java
+│ │ │ ├── ProviderServiceDatabase.java
+│ │ │ ├── ReviewDatabase.java
+│ │ │ ├── ServiceDatabase.java
+│ │ │ └── StorageHelper.java
+│ │ │
+│ │ ├── model/
+│ │ │ ├── Catalogue.java
+│ │ │ ├── Provider.java
+│ │ │ ├── ProviderService.java
+│ │ │ ├── Review.java
+│ │ │ └── Service.java
+│ │ │
+│ │ ├── util/
+│ │ │ └── ProToast.java
+│ │ │
+│ │ └── view/
+│ │ ├── EditProfileActivity.java
+│ │ ├── MainActivity.java
+│ │ ├── MultiSelectDropdown.java
+│ │ ├── ProviderDashboardActivity.java
+│ │ ├── ProviderEntryActivity.java
+│ │ └── ServiceDetailActivity.java
+│ │
+│ └── (Android auto-generated)
 │
 └── res/
-    ├── layout/
-    ├── values/
-    ├── drawable/
-    ├── mipmap/
-    └── xml/
-
-How to Run
-Using Android Studio:
-
-Clone repo
-
-Open project
-
-Add google-services.json
-
-Build & Run
-
-Firestore collections will auto-populate when accounts are created.
+├── layout/
+├── values/
+├── drawable/
+├── mipmap/
+└── xml/
 
 
+---
+
+## How to Run
+
+### Using Android Studio:
+1. Clone repo  
+2. Open project  
+3. Add **google-services.json** to `/app`  
+4. Build & Run  
+5. Create provider account  
+6. Firestore collections auto-populate  
+
+---
 
 Course: CS 175 - Android Mobile Development
 Professor Yan Chen
