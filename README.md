@@ -100,19 +100,10 @@ app/
     ├── mipmap/
     └── xml/
 
----
-
-## How to Run
-
-### Using Android Studio:
-1. Clone repo  
-2. Open project  
-3. Build & Run  
-4. Firestore collections auto-populate  
-
----
-
+```
 **Course:** CS 175 – Android Mobile Development  
 **Professor:** Yan Chen  
 **Semester:** Fall 2025
+
+
 
