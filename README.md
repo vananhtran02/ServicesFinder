@@ -26,14 +26,16 @@ This is Version 1.0 of the **ServicesFinder** Android app, designed to connect l
 
 Users can:  
 - browse services  
-- search by category or keyword  
+- search by category or any keyword  
 - view provider details  
-- contact providers  
+- contact providers
+- read and write review for the providers
 
 Providers can:  
 - register by phone or email  
 - add multiple services  
-- edit their profile  
+- edit personal profile
+- add/change their catelogue/services
 - delete their account  
 
 ---
