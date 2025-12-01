@@ -68,6 +68,22 @@
     <string name="create_account">Create Account</string>
     <string name="join_us_as_a_service_provider">Join us as a service provider</string>
 
+    <!-- ============================================ -->
+    <!-- CUSTOMER PORTAL / AUTHENTICATION -->
+    <!-- ============================================ -->
+    <string name="customer_sign_in">Sign In</string>
+    <string name="customer_portal">Customer Portal</string>
+    <string name="title_customer_authentication">Customer Sign In</string>
+    <string name="welcome_customer">Welcome!</string>
+    <string name="sign_in_to_leave_reviews">Sign in to leave reviews and save favorites</string>
+    <string name="create_customer_account">Create Account</string>
+    <string name="join_as_customer">Join to browse and review services</string>
+    <string name="customer_profile">Profile</string>
+    <string name="my_favorites">My Favorites</string>
+    <string name="no_favorites_yet">No favorites yet</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+
     <!-- Form Fields -->
     <string name="email_or_phone">Email or Phone</string>
     <string name="password">Password</string>
@@ -229,6 +245,24 @@
     <string name="error_fetching_provider">Error fetching provider: %1$s</string>
     <string name="error_saving_provider">"Error saving provider: "</string>
     <string name="error_failed_to_load_profile">Failed to load profile</string>
+
+    <!-- ============================================ -->
+    <!-- ERROR MESSAGES - Customer -->
+    <!-- ============================================ -->
+    <string name="error_customer_not_signed_in">Customer not signed in</string>
+    <string name="error_customer_not_found">Customer not found</string>
+    <string name="error_customer_not_found_with_phone">No customer found with this phone</string>
+    <string name="error_fetching_customer">Error fetching customer: %1$s</string>
+    <string name="error_delete_customer_failed">Failed to delete customer: %1$s</string>
+
+    <!-- ============================================ -->
+    <!-- SUCCESS MESSAGES - Customer -->
+    <!-- ============================================ -->
+    <string name="success_customer_saved">Customer profile saved</string>
+    <string name="success_customer_updated">Customer profile updated</string>
+    <string name="success_customer_deleted">Customer account deleted</string>
+    <string name="success_favorite_added">Added to favorites</string>
+    <string name="success_favorite_removed">Removed from favorites</string>
 
     <!-- ============================================ -->
     <!-- ERROR MESSAGES - Services -->

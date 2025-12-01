@@ -59,6 +59,20 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="36sp"/>
         </LinearLayout>
+
+        <!-- Customer Sign In / Profile Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/customerSignInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer_sign_in"
+            android:textColor="?attr/colorOnSecondary"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:backgroundTint="?attr/colorSecondary"
+            android:textSize="12sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:minWidth="80dp"/>
     </LinearLayout>
 
     <!-- Middle Section -->

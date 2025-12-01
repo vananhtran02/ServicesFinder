@@ -24,6 +24,7 @@
     import edu.sjsu.android.servicesfinder.R;
     import edu.sjsu.android.servicesfinder.controller.HomeController;
     import edu.sjsu.android.servicesfinder.controller.ServiceCardAdapter;
+    import edu.sjsu.android.servicesfinder.controller.SessionManager;
     import edu.sjsu.android.servicesfinder.databinding.ActivityMainBinding;
     import edu.sjsu.android.servicesfinder.model.Provider;
     import edu.sjsu.android.servicesfinder.model.ProviderService;
@@ -68,6 +69,7 @@
             setupSearchBox();
             setupFilterChips();
             setupProviderButton();
+            setupCustomerButton();
             showLoading();
             homeController.loadAllProvidersWithServices();
         }
@@ -171,6 +173,33 @@
             binding.providerBtn.setOnClickListener(v ->
                     startActivity(new Intent(this, ProviderEntryActivity.class))
             );
+        }
+
+        // ============================================================
+        // CUSTOMER SIGN IN BUTTON
+        // ============================================================
+        private void setupCustomerButton() {
+            updateCustomerButtonState();
+
+            binding.customerSignInBtn.setOnClickListener(v -> {
+                if (SessionManager.isCustomerLoggedIn(this)) {
+                    // TODO: Show customer profile/menu (for now, just show a toast)
+                    Toast.makeText(this, "Customer Profile - Coming Soon!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Open customer authentication activity
+                    startActivity(new Intent(this, CustomerAuthActivity.class));
+                }
+            });
+        }
+
+        private void updateCustomerButtonState() {
+            if (SessionManager.isCustomerLoggedIn(this)) {
+                String customerName = SessionManager.getCustomerName(this);
+                String firstName = customerName.split(" ")[0];
+                binding.customerSignInBtn.setText(firstName);
+            } else {
+                binding.customerSignInBtn.setText(R.string.customer_sign_in);
+            }
         }
 
         // ============================================================
@@ -312,6 +341,7 @@
         @Override
         protected void onResume() {
             super.onResume();
+            updateCustomerButtonState();
             showLoading();
             homeController.loadAllProvidersWithServices();
         }

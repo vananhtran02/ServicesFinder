@@ -37,6 +37,10 @@
             android:name=".view.ProviderEntryActivity"
             android:exported="true"/>
         <activity
+            android:name=".view.CustomerAuthActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ServicesFinder"/>
+        <activity
             android:name=".view.ServiceDetailActivity"
             android:label="Service Details"
             android:parentActivityName=".view.MainActivity"
