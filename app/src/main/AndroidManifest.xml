@@ -41,6 +41,10 @@
             android:exported="false"
             android:theme="@style/Theme.ServicesFinder"/>
         <activity
+            android:name=".view.CustomerProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ServicesFinder"/>
+        <activity
             android:name=".view.ServiceDetailActivity"
             android:label="Service Details"
             android:parentActivityName=".view.MainActivity"

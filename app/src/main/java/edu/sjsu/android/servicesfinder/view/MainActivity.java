@@ -183,8 +183,8 @@
 
             binding.customerSignInBtn.setOnClickListener(v -> {
                 if (SessionManager.isCustomerLoggedIn(this)) {
-                    // TODO: Show customer profile/menu (for now, just show a toast)
-                    Toast.makeText(this, "Customer Profile - Coming Soon!", Toast.LENGTH_SHORT).show();
+                    // Open customer profile
+                    startActivity(new Intent(this, CustomerProfileActivity.class));
                 } else {
                     // Open customer authentication activity
                     startActivity(new Intent(this, CustomerAuthActivity.class));

@@ -330,12 +330,17 @@ public class ServiceDetailActivity extends AppCompatActivity {
     // FAVORITES FEATURE
     // =========================================================
     private void setupFavoriteButton() {
+        Log.d("FAVORITE_DEBUG", "setupFavoriteButton called");
         // Check if customer is logged in and load favorite status
         if (SessionManager.isCustomerLoggedIn(this)) {
+            Log.d("FAVORITE_DEBUG", "Customer is logged in, loading favorite status");
             loadFavoriteStatus();
+        } else {
+            Log.d("FAVORITE_DEBUG", "Customer not logged in");
         }
 
         binding.favoriteButton.setOnClickListener(v -> {
+            Log.d("FAVORITE_DEBUG", "Favorite button clicked");
             if (!SessionManager.isCustomerLoggedIn(this)) {
                 // Prompt user to sign in
                 new AlertDialog.Builder(this)
@@ -378,12 +383,19 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
     private void toggleFavorite() {
         String customerId = SessionManager.getCustomerId(this);
-        if (customerId == null || providerId == null) return;
+        Log.d("FAVORITE_DEBUG", "toggleFavorite called - customerId: " + customerId + ", providerId: " + providerId + ", isFavorite: " + isFavorite);
+
+        if (customerId == null || providerId == null) {
+            Log.e("FAVORITE_DEBUG", "customerId or providerId is null!");
+            ProToast.error(this, "Error: Missing customer or provider ID");
+            return;
+        }
 
         CustomerController customerController = new CustomerController(this);
         CustomerDatabase.OnCustomerOperationListener callback = new CustomerDatabase.OnCustomerOperationListener() {
             @Override
             public void onSuccess(String message) {
+                Log.d("FAVORITE_DEBUG", "Toggle success: " + message);
                 isFavorite = !isFavorite;
                 updateFavoriteButton();
                 ProToast.success(ServiceDetailActivity.this, message);
@@ -391,6 +403,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
+                Log.e("FAVORITE_DEBUG", "Toggle error: " + errorMessage);
                 ProToast.error(ServiceDetailActivity.this, errorMessage);
             }
         };
