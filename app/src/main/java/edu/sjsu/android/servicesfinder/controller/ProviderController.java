@@ -1,5 +1,7 @@
 package edu.sjsu.android.servicesfinder.controller;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +31,8 @@ public class ProviderController {
     private final ProviderDatabase providerDatabase;
     private final FirebaseAuth auth;
     private ProviderControllerListener listener;
+
+    private static final String PHONE_EMAIL_SUFFIX = "@phone.provider.local";
 
     private final Context context;
     public ProviderController(Context context) {
@@ -116,8 +120,25 @@ public class ProviderController {
 
         } else {
             // Phone-only sign-up (Firestore only, no FirebaseAuth)
-            String fakeUid = "P_" + System.currentTimeMillis();
-            createAndSaveProvider(fakeUid, fullName, "", phone, address, password);
+            //String fakeUid = "P_" + System.currentTimeMillis();
+            //createAndSaveProvider(fakeUid, fullName, "", phone, address, password);
+            String digitsOnlyPhone = phone.replaceAll("[^0-9]", "");
+            String syntheticEmail = digitsOnlyPhone + PHONE_EMAIL_SUFFIX;
+
+            auth.createUserWithEmailAndPassword(syntheticEmail, password)
+                    .addOnSuccessListener(result -> {
+                        FirebaseUser user = auth.getCurrentUser();
+                        if (user == null) {
+                            if (listener != null) listener.onError(context.getString(R.string.error_null_user));
+                            return;
+                        }
+                        String uid = user.getUid();
+                        createAndSaveProvider(uid, fullName, "", digitsOnlyPhone, address, password);
+                    })
+                    .addOnFailureListener(e -> {
+                        if (listener != null)
+                            listener.onError(context.getString(R.string.sign_up_failed) + e.getMessage());
+                    });
         }
     }
 
@@ -144,7 +165,7 @@ public class ProviderController {
     /* *****************************************************************************************
     // Phone-based sign-in via Firestore
     ******************************************************************************************/
-    public void signInWithPhone(String phone, String password, AuthCallback callback) {
+    public void signInWithPhone1(String phone, String password, AuthCallback callback) {
         phone = phone.replaceAll("[^0-9]", "");
         providerDatabase.getProviderByPhone(phone, new ProviderDatabase.OnProviderLoadedListener() {
             @Override
@@ -154,6 +175,40 @@ public class ProviderController {
                 else
                     callback.onError(context.getString(R.string.error_invalid_password));
 
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                callback.onError(context.getString(R.string.error_no_account_with_phone));
+            }
+        });
+    }
+    public void signInWithPhone(String phone, String password, AuthCallback callback) {
+        String digits = phone == null ? "" : phone.replaceAll("[^0-9]", "");
+
+        providerDatabase.getProviderByPhone(digits, new ProviderDatabase.OnProviderLoadedListener() {
+            @Override
+            public void onSuccess(Provider provider) {
+                if (!provider.getPassword().equals(password)) {
+                    callback.onError(context.getString(R.string.error_invalid_password));
+                    return;
+                }
+
+                String syntheticEmail = provider.getPhone() + PHONE_EMAIL_SUFFIX;
+
+                auth.signInWithEmailAndPassword(syntheticEmail, password)
+                        .addOnSuccessListener(result -> {
+                            FirebaseUser user = result.getUser();
+                            if (user != null) {
+                                callback.onSuccess(user.getUid());
+                            } else {
+                                callback.onError(context.getString(R.string.error_null_user));
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "FirebaseAuth phone sign-in failed", e);
+                            callback.onError(context.getString(R.string.error_no_account_with_phone));
+                        });
             }
 
             @Override

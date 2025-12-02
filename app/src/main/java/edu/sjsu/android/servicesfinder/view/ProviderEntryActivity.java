@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import edu.sjsu.android.servicesfinder.R;
 import edu.sjsu.android.servicesfinder.controller.SessionManager;
@@ -364,7 +365,14 @@ public class ProviderEntryActivity extends AppCompatActivity
     }
 
     private void launchProviderDashboard() {
+        //Intent intent = new Intent(this, ProviderDashboardActivity.class);
+        //startActivity(intent);
+        //finish();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         Intent intent = new Intent(this, ProviderDashboardActivity.class);
+        intent.putExtra("providerId", uid);
+        intent.putExtra("skipDraft", true);
         startActivity(intent);
         finish();
     }

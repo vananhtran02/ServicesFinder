@@ -518,6 +518,7 @@ public class ProviderDashboardActivity extends AppCompatActivity
     // LOAD LAST SERVICE DRAFT
     // =========================================================
     private void loadLastServiceDraft() {
+
         // Check if user is authenticated
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Log.w("ProviderDashboard", "User not authenticated, skipping draft load");
