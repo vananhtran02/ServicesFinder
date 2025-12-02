@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingTop="8dp">
+                    android:paddingTop="0dp">
 
                     <!-- Results Count -->
                     <TextView
@@ -150,28 +150,40 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/sortButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="32dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
                         android:text="@string/sort"
-                        android:textSize="12sp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
+                        android:textSize="14sp"
                         style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_marginEnd="8dp"
                         app:icon="@android:drawable/ic_menu_sort_by_size"
-                        app:iconSize="16dp"/>
+                        app:iconSize="16dp"
+                        app:iconPadding="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/black"
+                        android:layout_marginEnd="8dp" />
 
                     <!-- Language Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/languageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
                         android:text="EN"
-                        android:textSize="12sp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        style="@style/Widget.Material3.Button.TextButton"
                         app:icon="@android:drawable/ic_menu_preferences"
-                        app:iconSize="16dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        app:iconSize="16dp"
+                        app:strokeColor="@color/black"
+                        app:iconPadding="1dp"
+                        app:strokeWidth="1dp"/>
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -189,7 +201,7 @@
                     android:id="@+id/servicesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:padding="0dp"
                     android:clipToPadding="false"
                     android:visibility="gone"/>
 
