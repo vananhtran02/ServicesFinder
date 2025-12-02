@@ -17,7 +17,7 @@
 ---
 
 ### 📱 APK File:
-https://drive.google.com/file/d/1GHE4sdEyJbap8_SnTVIY1ZLuwNL2vEVY/view?usp=sharing
+https://drive.google.com/file/d/1QdVSm8_mozZUjqOe-86iy6RrGaG_C4R-/view?usp=sharing
 
 ### 📋 Backlog:
 https://docs.google.com/spreadsheets/d/1pm37TSBmQL9C6HI7-OMaLhnKDPHRMzfbEjpT8pUAz8k/edit?gid=0#gid=0
