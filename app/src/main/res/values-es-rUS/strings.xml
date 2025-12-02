@@ -298,5 +298,58 @@
     <string name="action_add_review">Agregar reseña</string>
     <string name="label_reviews">Reseñas</string>
     <string name="label_no_reviews_yet">Aún no hay reseñas. ¡Sé el primero!</string>
+    <string name="dialog_title_add_review">Agregar reseña</string>
+    <string name="label_rating">Calificación</string>
+    <string name="label_comment">Comentario</string>
+    <string name="hint_enter_comment">Comparte tu experiencia con este proveedor…</string>
+    <string name="error_select_rating">Por favor selecciona una calificación</string>
+    <string name="success_review_submitted">¡Reseña enviada con éxito!</string>
+    <string name="error_review_submit_failed">Error al enviar la reseña</string>
+    <string name="action_submit">Enviar</string>
+
+    <!-- ERROR MESSAGES - Customer -->
+    <string name="error_customer_not_signed_in">Cliente no ha iniciado sesión</string>
+    <string name="error_customer_not_found">Cliente no encontrado</string>
+    <string name="error_customer_not_found_with_phone">No se encontró cliente con este teléfono</string>
+    <string name="error_fetching_customer">Error al obtener cliente: %1$s</string>
+    <string name="error_delete_customer_failed">Error al eliminar cliente: %1$s</string>
+
+    <!-- SUCCESS MESSAGES - Customer -->
+    <string name="success_customer_saved">Perfil de cliente guardado</string>
+    <string name="success_customer_updated">Perfil de cliente actualizado</string>
+    <string name="success_customer_deleted">Cuenta de cliente eliminada</string>
+    <string name="success_favorite_added">Agregado a favoritos</string>
+    <string name="success_favorite_removed">Eliminado de favoritos</string>
+
+    <!-- Sorting Options -->
+    <string name="sort">Ordenar</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="sort_most_recent">Más reciente</string>
+    <string name="sort_price_low_high">Precio: de menor a mayor</string>
+    <string name="sort_price_high_low">Precio: de mayor a menor</string>
+    <string name="sort_rating">Mejor calificado</string>
+    <string name="sort_popular">Más popular</string>
+
+    <!-- Language Options -->
+    <string name="select_language">Seleccionar idioma</string>
+    <string name="lang_english">Inglés</string>
+    <string name="lang_spanish">Español</string>
+    <string name="lang_vietnamese">Vietnamita</string>
+    <string name="lang_chinese">Chino</string>
+
+    <!-- CUSTOMER PORTAL / AUTHENTICATION -->
+    <string name="customer_sign_in">Iniciar sesión</string>
+    <string name="customer_portal">Portal de clientes</string>
+    <string name="title_customer_authentication">Inicio de sesión de cliente</string>
+    <string name="welcome_customer">¡Bienvenido!</string>
+    <string name="sign_in_to_leave_reviews">Inicia sesión para dejar reseñas y guardar favoritos</string>
+    <string name="create_customer_account">Crear cuenta</string>
+    <string name="join_as_customer">Únete para explorar y reseñar servicios</string>
+    <string name="customer_profile">Perfil</string>
+    <string name="my_favorites">Mis favoritos</string>
+    <string name="no_favorites_yet">Aún no tienes favoritos</string>
+    <string name="add_to_favorites">Agregar a favoritos</string>
+    <string name="remove_from_favorites">Eliminar de favoritos</string>
+
 
 </resources>

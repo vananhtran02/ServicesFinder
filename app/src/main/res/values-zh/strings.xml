@@ -350,6 +350,58 @@
     <string name="action_add_review">添加评价</string>
     <string name="label_reviews">评价</string>
     <string name="label_no_reviews_yet">还没有任何评价，赶快来留下第一条吧！</string>
+    <string name="dialog_title_add_review">添加评价</string>
+    <string name="label_rating">评分</string>
+    <string name="label_comment">评论</string>
+    <string name="hint_enter_comment">分享您对该服务提供者的体验…</string>
+    <string name="error_select_rating">请选择一个评分</string>
+    <string name="success_review_submitted">评价提交成功！</string>
+    <string name="error_review_submit_failed">提交评价失败</string>
+    <string name="action_submit">提交</string>
+
+    <!-- ERROR MESSAGES - Customer -->
+    <string name="error_customer_not_signed_in">客户未登录</string>
+    <string name="error_customer_not_found">未找到客户</string>
+    <string name="error_customer_not_found_with_phone">未找到使用此电话的客户</string>
+    <string name="error_fetching_customer">获取客户时出错：%1$s</string>
+    <string name="error_delete_customer_failed">删除客户失败：%1$s</string>
+
+    <!-- SUCCESS MESSAGES - Customer -->
+    <string name="success_customer_saved">客户资料已保存</string>
+    <string name="success_customer_updated">客户资料已更新</string>
+    <string name="success_customer_deleted">客户账户已删除</string>
+    <string name="success_favorite_added">已添加到收藏</string>
+    <string name="success_favorite_removed">已从收藏移除</string>
+
+    <!-- Sorting Options -->
+    <string name="sort">排序</string>
+    <string name="sort_by">排序方式</string>
+    <string name="sort_most_recent">最新</string>
+    <string name="sort_price_low_high">价格：从低到高</string>
+    <string name="sort_price_high_low">价格：从高到低</string>
+    <string name="sort_rating">最高评分</string>
+    <string name="sort_popular">最受欢迎</string>
+
+    <!-- Language Options -->
+    <string name="select_language">选择语言</string>
+    <string name="lang_english">英语</string>
+    <string name="lang_spanish">西班牙语</string>
+    <string name="lang_vietnamese">越南语</string>
+    <string name="lang_chinese">中文</string>
+
+    <!-- CUSTOMER PORTAL / AUTHENTICATION -->
+    <string name="customer_sign_in">登录</string>
+    <string name="customer_portal">客户门户</string>
+    <string name="title_customer_authentication">客户登录</string>
+    <string name="welcome_customer">欢迎！</string>
+    <string name="sign_in_to_leave_reviews">登录以留下评价并保存收藏</string>
+    <string name="create_customer_account">创建账户</string>
+    <string name="join_as_customer">加入以浏览和评价服务</string>
+    <string name="customer_profile">个人资料</string>
+    <string name="my_favorites">我的收藏</string>
+    <string name="no_favorites_yet">暂无收藏</string>
+    <string name="add_to_favorites">添加到收藏</string>
+    <string name="remove_from_favorites">从收藏中移除</string>
 
 
 </resources>

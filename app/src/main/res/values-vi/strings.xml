@@ -347,6 +347,58 @@
     <string name="action_add_review">Thêm đánh giá</string>
     <string name="label_reviews">Đánh giá</string>
     <string name="label_no_reviews_yet">Chưa có đánh giá nào. Hãy là người đầu tiên!</string>
+    <string name="dialog_title_add_review">Thêm đánh giá</string>
+    <string name="label_rating">Xếp hạng</string>
+    <string name="label_comment">Bình luận</string>
+    <string name="hint_enter_comment">Chia sẻ trải nghiệm của bạn với nhà cung cấp này…</string>
+    <string name="error_select_rating">Vui lòng chọn xếp hạng</string>
+    <string name="success_review_submitted">Đánh giá đã được gửi thành công!</string>
+    <string name="error_review_submit_failed">Gửi đánh giá thất bại</string>
+    <string name="action_submit">Gửi</string>
+
+    <!-- ERROR MESSAGES - Customer -->
+    <string name="error_customer_not_signed_in">Khách hàng chưa đăng nhập</string>
+    <string name="error_customer_not_found">Không tìm thấy khách hàng</string>
+    <string name="error_customer_not_found_with_phone">Không tìm thấy khách hàng với số điện thoại này</string>
+    <string name="error_fetching_customer">Lỗi khi lấy thông tin khách hàng: %1$s</string>
+    <string name="error_delete_customer_failed">Xóa khách hàng thất bại: %1$s</string>
+
+    <!-- SUCCESS MESSAGES - Customer -->
+    <string name="success_customer_saved">Hồ sơ khách hàng đã được lưu</string>
+    <string name="success_customer_updated">Hồ sơ khách hàng đã được cập nhật</string>
+    <string name="success_customer_deleted">Tài khoản khách hàng đã bị xóa</string>
+    <string name="success_favorite_added">Đã thêm vào mục yêu thích</string>
+    <string name="success_favorite_removed">Đã xóa khỏi mục yêu thích</string>
+
+    <!-- Sorting Options -->
+    <string name="sort">Sắp xếp</string>
+    <string name="sort_by">Sắp xếp theo</string>
+    <string name="sort_most_recent">Mới nhất</string>
+    <string name="sort_price_low_high">Giá: Thấp đến Cao</string>
+    <string name="sort_price_high_low">Giá: Cao đến Thấp</string>
+    <string name="sort_rating">Được đánh giá cao nhất</string>
+    <string name="sort_popular">Phổ biến nhất</string>
+
+    <!-- Language Options -->
+    <string name="select_language">Chọn ngôn ngữ</string>
+    <string name="lang_english">Tiếng Anh</string>
+    <string name="lang_spanish">Tiếng Tây Ban Nha</string>
+    <string name="lang_vietnamese">Tiếng Việt</string>
+    <string name="lang_chinese">Tiếng Trung</string>
+
+    <!-- CUSTOMER PORTAL / AUTHENTICATION -->
+    <string name="customer_sign_in">Đăng nhập</string>
+    <string name="customer_portal">Cổng khách hàng</string>
+    <string name="title_customer_authentication">Đăng nhập khách hàng</string>
+    <string name="welcome_customer">Chào mừng!</string>
+    <string name="sign_in_to_leave_reviews">Đăng nhập để viết đánh giá và lưu mục yêu thích</string>
+    <string name="create_customer_account">Tạo tài khoản</string>
+    <string name="join_as_customer">Tham gia để xem và đánh giá dịch vụ</string>
+    <string name="customer_profile">Hồ sơ</string>
+    <string name="my_favorites">Yêu thích của tôi</string>
+    <string name="no_favorites_yet">Chưa có mục yêu thích nào</string>
+    <string name="add_to_favorites">Thêm vào mục yêu thích</string>
+    <string name="remove_from_favorites">Xóa khỏi mục yêu thích</string>
 
 
 </resources>
