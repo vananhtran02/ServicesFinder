@@ -15,18 +15,30 @@
         android:padding="12dp"
         android:gravity="center_vertical">
 
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="?attr/colorOnPrimary"
+            android:contentDescription="@string/cancel"/>
+
         <!-- Logo -->
         <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/servicesfinderlogo"
-            android:contentDescription="App Logo"
+            android:contentDescription="@string/app_name"
+            android:layout_marginStart="8dp"
             android:adjustViewBounds="true" />
 
         <!-- Text Column -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="12dp"
             android:gravity="center_vertical">
@@ -34,13 +46,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/provider_portal"
+                android:text="@string/customer_portal"
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnPrimary"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeMaxTextSize="26sp"
-                android:autoSizeStepGranularity="1sp" />
+                android:textSize="20sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,16 +57,11 @@
                 android:text="@string/sign_in_or_create_an_account"
                 android:textColor="?attr/colorOnPrimary"
                 android:alpha="0.9"
-                android:layout_marginTop="2dp"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="10sp"
-                android:autoSizeMaxTextSize="18sp"
-                android:autoSizeStepGranularity="1sp" />
+                android:textSize="13sp"
+                android:layout_marginTop="2dp"/>
 
         </LinearLayout>
     </LinearLayout>
-
-
 
     <!-- Tab Layout -->
     <com.google.android.material.tabs.TabLayout
@@ -68,13 +72,12 @@
         app:tabGravity="fill"
         app:tabIndicatorColor="?attr/colorPrimary"
         app:tabTextColor="?attr/colorOnSurface"
-        app:tabTextAppearance="@style/CustomTabText"
         app:tabSelectedTextColor="?attr/colorPrimary">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"            />
+            android:text="@string/sign_in"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -106,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/welcome_back"
+                    android:text="@string/welcome_customer"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/peru"
@@ -115,77 +118,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_in_to_manage_your_services"
+                    android:text="@string/sign_in_to_leave_reviews"
                     android:textSize="14sp"
                     android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.8"
                     android:layout_marginBottom="24dp" />
 
-
-                <!-- Email or Phone -->
+                <!-- Email/Phone Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@android:drawable/ic_menu_call"
-                    app:boxBackgroundMode="outline">
+                    android:hint="@string/email_or_phone"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signInEmailOrPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/email_or_phone"
-                        android:inputType="text"
-                        android:maxLines="1" />
-
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-
-                <!-- Password -->
+                <!-- Password Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    app:startIconDrawable="@android:drawable/ic_lock_lock"
+                    android:hint="@string/password"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     app:endIconMode="password_toggle"
-                    app:boxBackgroundMode="outline">
+                    android:layout_marginBottom="24dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signInPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/password"
                         android:inputType="textPassword"
-                        android:maxLines="1" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <!-- Sign In Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signInButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="60dp"
+                    android:text="@string/sign_in"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="8dp"/>
 
-                    <!-- Sign In Button (Left) -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/signInButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/sign_in"
-                        android:textSize="16sp"
-                        style="@style/SF.PrimaryButton" />
-
-                    <!-- Cancel Button (Right) -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/signInCancelButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/cancel"
-                        android:textSize="16sp"
-                        style="@style/SF.SecondaryButton"
-                        android:layout_marginStart="8dp" />
-                </LinearLayout>
             </LinearLayout>
 
             <!-- ========== SIGN UP LAYOUT ========== -->
@@ -199,7 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_account"
+                    android:text="@string/create_customer_account"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/peru"
@@ -208,155 +189,113 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/join_us_as_a_service_provider"
+                    android:text="@string/join_as_customer"
                     android:textSize="14sp"
                     android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.8"
                     android:layout_marginBottom="24dp" />
 
                 <!-- Full Name -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    app:startIconDrawable="@android:drawable/ic_menu_myplaces"
-                    app:boxBackgroundMode="outline">
+                    android:hint="@string/full_name_required"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signUpFullName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/full_name_required"
                         android:inputType="textPersonName"
-                        android:maxLines="1" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Email -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    app:startIconDrawable="@android:drawable/ic_dialog_email"
-                    app:boxBackgroundMode="outline">
+                    android:hint="Email"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signUpEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/contact_email"
                         android:inputType="textEmailAddress"
-                        android:maxLines="1" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Phone -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    app:startIconDrawable="@android:drawable/ic_menu_call"
-                    app:boxBackgroundMode="outline">
+                    android:hint="@string/phone_required"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signUpPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/phone_required"
                         android:inputType="phone"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Address -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    app:startIconDrawable="@android:drawable/ic_menu_mylocation"
-                    app:boxBackgroundMode="outline">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/signUpAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/address_required"
-                        android:inputType="textPostalAddress"
-                        android:maxLines="2" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Password -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    app:startIconDrawable="@android:drawable/ic_lock_lock"
+                    android:hint="@string/password_required"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     app:endIconMode="password_toggle"
-                    app:boxBackgroundMode="outline">
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signUpPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/password_required"
                         android:inputType="textPassword"
-                        android:maxLines="1" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Confirm Password -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    app:startIconDrawable="@android:drawable/ic_lock_lock"
+                    android:hint="@string/confirm_password"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     app:endIconMode="password_toggle"
-                    app:boxBackgroundMode="outline">
+                    android:layout_marginBottom="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/signUpConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/confirm_password"
                         android:inputType="textPassword"
-                        android:maxLines="1" />
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Required Field Note -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/required_field"
                     android:textSize="12sp"
-                    android:textColor="?attr/colorError"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:fontFamily="sans-serif-medium" />
+                    android:alpha="0.6"
+                    android:layout_marginBottom="16dp"/>
 
                 <!-- Sign Up Button -->
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signUpButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="60dp"
+                    android:text="@string/create"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="8dp"/>
 
-                    <!-- Create Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/signUpButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/create"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        style="@style/SF.PrimaryButton"/>
-
-                    <!-- Cancel Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/signUpCancelButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/cancel"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        style="@style/SF.SecondaryButton"
-                        android:layout_marginStart="8dp" />
-                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
     </ScrollView>
@@ -373,15 +312,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/looking_for_services"
+            android:text="@string/are_you_service_provider"
             android:textSize="14sp"
             android:alpha="0.8"/>
 
         <TextView
-            android:id="@+id/switchToCustomerButton"
+            android:id="@+id/switchToProviderButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in_as_customer"
+            android:text="@string/sign_in_as_provider"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary"

@@ -23,11 +23,15 @@ import java.util.Locale;
 import java.util.Objects;
 
 import edu.sjsu.android.servicesfinder.R;
+import edu.sjsu.android.servicesfinder.controller.CustomerController;
 import edu.sjsu.android.servicesfinder.controller.FirestoreStringTranslator;
 import edu.sjsu.android.servicesfinder.controller.HomeController;
 import edu.sjsu.android.servicesfinder.controller.ReviewAdapter;
+import edu.sjsu.android.servicesfinder.controller.SessionManager;
+import edu.sjsu.android.servicesfinder.database.CustomerDatabase;
 import edu.sjsu.android.servicesfinder.database.ReviewDatabase;
 import edu.sjsu.android.servicesfinder.databinding.ActivityServiceDetailBinding;
+import edu.sjsu.android.servicesfinder.model.Customer;
 import edu.sjsu.android.servicesfinder.model.Review;
 import edu.sjsu.android.servicesfinder.util.ProToast;
 
@@ -58,6 +62,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private ReviewDatabase reviewDatabase;
     private String providerId;
     private ReviewAdapter reviewAdapter;
+    // FAVORITES
+    private boolean isFavorite = false;
 
 
     //**********************************************************************************************************
@@ -91,7 +97,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         getIntentExtras();  // Retrieves data passed from the main activity
         displayServiceInfo();
         setupActionButtons();
-
+        setupFavoriteButton();
         setupReviewsSection();
     }
 
@@ -320,6 +326,99 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
     }
 
+    // =========================================================
+    // FAVORITES FEATURE
+    // =========================================================
+    private void setupFavoriteButton() {
+        Log.d("FAVORITE_DEBUG", "setupFavoriteButton called");
+        // Check if customer is logged in and load favorite status
+        if (SessionManager.isCustomerLoggedIn(this)) {
+            Log.d("FAVORITE_DEBUG", "Customer is logged in, loading favorite status");
+            loadFavoriteStatus();
+        } else {
+            Log.d("FAVORITE_DEBUG", "Customer not logged in");
+        }
+
+        binding.favoriteButton.setOnClickListener(v -> {
+            Log.d("FAVORITE_DEBUG", "Favorite button clicked");
+            if (!SessionManager.isCustomerLoggedIn(this)) {
+                // Prompt user to sign in
+                new AlertDialog.Builder(this)
+                        .setTitle("Sign In Required")
+                        .setMessage("Please sign in to add favorites")
+                        .setPositiveButton("Sign In", (dialog, which) -> {
+                            Intent intent = new Intent(this, CustomerAuthActivity.class);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+                return;
+            }
+
+            // Toggle favorite
+            toggleFavorite();
+        });
+    }
+
+    private void loadFavoriteStatus() {
+        String customerId = SessionManager.getCustomerId(this);
+        if (customerId == null || providerId == null) return;
+
+        CustomerDatabase customerDatabase = new CustomerDatabase(this);
+        customerDatabase.getCustomerById(customerId, new CustomerDatabase.OnCustomerLoadedListener() {
+            @Override
+            public void onSuccess(Customer customer) {
+                isFavorite = customer.isFavorite(providerId);
+                updateFavoriteButton();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Failed to load, assume not favorite
+                isFavorite = false;
+                updateFavoriteButton();
+            }
+        });
+    }
+
+    private void toggleFavorite() {
+        String customerId = SessionManager.getCustomerId(this);
+        Log.d("FAVORITE_DEBUG", "toggleFavorite called - customerId: " + customerId + ", providerId: " + providerId + ", isFavorite: " + isFavorite);
+
+        if (customerId == null || providerId == null) {
+            Log.e("FAVORITE_DEBUG", "customerId or providerId is null!");
+            ProToast.error(this, "Error: Missing customer or provider ID");
+            return;
+        }
+
+        CustomerController customerController = new CustomerController(this);
+        CustomerDatabase.OnCustomerOperationListener callback = new CustomerDatabase.OnCustomerOperationListener() {
+            @Override
+            public void onSuccess(String message) {
+                Log.d("FAVORITE_DEBUG", "Toggle success: " + message);
+                isFavorite = !isFavorite;
+                updateFavoriteButton();
+                ProToast.success(ServiceDetailActivity.this, message);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e("FAVORITE_DEBUG", "Toggle error: " + errorMessage);
+                ProToast.error(ServiceDetailActivity.this, errorMessage);
+            }
+        };
+
+        customerController.toggleFavoriteProvider(customerId, providerId, isFavorite, callback);
+    }
+
+    private void updateFavoriteButton() {
+        if (isFavorite) {
+            binding.favoriteButton.setText("♥");  // Filled heart
+        } else {
+            binding.favoriteButton.setText("♡");  // Empty heart
+        }
+    }
+
     /** Formats a 10-digit phone number as (XXX) XXX-XXXX */
     private String formatPhone(String phone) {
         if (phone == null || phone.isEmpty()) return "";
@@ -352,6 +451,21 @@ public class ServiceDetailActivity extends AppCompatActivity {
     // REVIEW SYSTEM
     // =========================================================
     private void showAddReviewDialog() {
+        // Check if customer is logged in
+        if (!SessionManager.isCustomerLoggedIn(this)) {
+            // Prompt user to sign in
+            new AlertDialog.Builder(this)
+                    .setTitle("Sign In Required")
+                    .setMessage("Please sign in to leave a review")
+                    .setPositiveButton("Sign In", (dialog, which) -> {
+                        Intent intent = new Intent(this, CustomerAuthActivity.class);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            return;
+        }
+
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_review, null);
 
         // DEBUG: Check if the view was inflated correctly
@@ -409,9 +523,15 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
     }
     private void submitReview(float rating, String comment) {
-        // Get customer info (you'll need to implement customer authentication)
-        String customerId = "customer_" + System.currentTimeMillis(); // Temporary
-        String customerName = "Anonymous";  // Replace with actual customer name
+        // Get customer info from session
+        String customerId = SessionManager.getCustomerId(this);
+        String customerName = SessionManager.getCustomerName(this);
+
+        // Double-check authentication (should not happen if dialog check works)
+        if (customerId == null || customerName == null || customerName.isEmpty()) {
+            ProToast.error(this, "Please sign in to submit a review");
+            return;
+        }
 
         Review review = new Review();
         review.setProviderId(providerId);
