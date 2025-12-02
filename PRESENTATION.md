@@ -4,7 +4,7 @@
 
 ## 1. INTRODUCTION (3mins)
 
-Good afternoon, everyone. I'm Rohan from Group 9, along with **Van Anh Tran, Ben Nguyen, Nhat Anh Nguyen, and Rohan Mehta**. Today we're presenting **ServicesFinder** - an Android platform connecting customers with local service providers.
+Good afternoon, everyone. I'm Rohan from Group 9, along with **Van Anh Tran, Ben Nguyen, and Nhat Anh Nguyen**. Today we're presenting **ServicesFinder** - an Android platform connecting customers with local service providers.
 
 ### 🎯 The Problem
 - Finding reliable local service providers (plumbers, electricians, tutors) is challenging
