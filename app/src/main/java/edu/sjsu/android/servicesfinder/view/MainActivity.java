@@ -51,6 +51,8 @@
         private String currentCategoryFilter = "";   // ALWAYS ENGLISH KEY
         private SortOption currentSortOption = SortOption.MOST_RECENT;
 
+        private boolean skipDataReload = false;
+
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -474,13 +476,28 @@
             if (searchHandler != null && searchRunnable != null)
                 searchHandler.removeCallbacks(searchRunnable);
         }
-
+        /*
         @Override
         protected void onResume() {
             super.onResume();
             updateCustomerButtonState();
             showLoading();
             homeController.loadAllProvidersWithServices();
+        }
+
+         */
+        @Override
+        protected void onResume() {
+            super.onResume();
+            updateCustomerButtonState();
+
+            if (!skipDataReload) {
+                showLoading();
+                homeController.loadAllProvidersWithServices();
+            } else {
+                skipDataReload = false;
+                showContent();   // << skip reloading data
+            }
         }
 
         // ============================================================
@@ -557,7 +574,7 @@
             }
         }
 
-        private void showLanguageDialog() {
+        private void showLanguageDialog1() {
             String[] languages = {
                     getString(R.string.lang_english),
                     getString(R.string.lang_spanish),
@@ -581,10 +598,56 @@
                     .show();
         }
 
+        private void showLanguageDialog() {
+
+            String[] languages = {
+                    getString(R.string.lang_english) + " (English)",
+                    getString(R.string.lang_spanish) + " (Spanish)",
+                    getString(R.string.lang_vietnamese) + " (Vietnamese)",
+                    getString(R.string.lang_chinese) + " (Chinese)"
+            };
+
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle(R.string.select_language)
+                    .setItems(languages, (dialog, which) -> {
+                        String langCode;
+                        switch (which) {
+                            case 0: langCode = "en"; break;
+                            case 1: langCode = "es"; break;
+                            case 2: langCode = "vi"; break;
+                            case 3: langCode = "zh"; break;
+                            default: langCode = "en"; break;
+                        }
+                        changeLanguage(langCode);
+                    })
+                    .setNegativeButton(R.string.action_cancel, null)
+                    .show();
+        }
+
+
+        private void changeLanguage1(String languageCode) {
+            // Save language preference
+            android.content.SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+            prefs.edit().putString("app_language", languageCode).apply();
+
+            java.util.Locale locale = new java.util.Locale(languageCode);
+            java.util.Locale.setDefault(locale);
+
+            android.content.res.Configuration config = new android.content.res.Configuration();
+            config.setLocale(locale);
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+            // Restart activity to apply language change
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
         private void changeLanguage(String languageCode) {
             // Save language preference
             android.content.SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
             prefs.edit().putString("app_language", languageCode).apply();
+
+            skipDataReload = true;
 
             java.util.Locale locale = new java.util.Locale(languageCode);
             java.util.Locale.setDefault(locale);
