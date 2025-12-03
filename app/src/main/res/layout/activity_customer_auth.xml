@@ -20,10 +20,10 @@
             android:id="@+id/backButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:src="@drawable/ic_arrow_back"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="?attr/colorOnPrimary"
-            android:contentDescription="@string/cancel"/>
+            android:contentDescription="@string/cancel"
+            app:tint="?attr/colorOnPrimary" />
 
         <!-- Logo -->
         <ImageView
