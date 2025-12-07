@@ -167,6 +167,15 @@ app/
 
 ## 📖 User Guide
 
+---
+
+## ⚙️ Requirements
+
+- **Minimum Android Version:** API 29 (Android 10) or higher
+- **Internet Connection:** Required for all features
+- **Device Support:** Android phones and tablets
+- **Screen Orientation:** Portrait and landscape modes supported
+
 ### 🎯 Getting Started
 1. Download and install the APK from the link above
 2. Launch ServicesFinder
