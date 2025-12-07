@@ -299,11 +299,6 @@ app/
 5. **Confirm new password**
 6. Tap **"Update Password"**
 
-#### **Switch to Customer Mode**
-1. Logout from provider dashboard
-2. At the authentication screen, tap **"Switch to Customer"**
-3. Sign in with your customer account (different from provider account)
-
 ---
 
 
