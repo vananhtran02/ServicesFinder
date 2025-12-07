@@ -177,8 +177,10 @@ app/
 - **Screen Orientation:** Portrait and landscape modes supported
 
 ### 🎯 Getting Started
-1. Download and install the APK from the link above
-2. Launch ServicesFinder
+1. Download the APK file from the link above
+2. Enable "Install from Unknown Sources" in Android Settings (Settings → Security → Unknown Sources)
+3. Open the downloaded APK file and tap "Install"
+4. Launch ServicesFinder
 
 ---
 
