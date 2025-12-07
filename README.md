@@ -165,7 +165,135 @@ app/
     └── xml/
 ```
 
+## 📖 User Guide
 
+### 🎯 Getting Started
+1. Download and install the APK from the link above
+2. Launch ServicesFinder
+
+---
+
+### 🛒 For Customers (Service Seekers):
+
+#### **Sign Up/Sign In (Not required)**
+1. Tap **"Continue as Customer"** on the main screen
+2. Enter your **email** or **phone number**
+3. Create a **password** (minimum 6 characters)
+4. Tap **"Sign Up"** (new user) or **"Sign In"** (existing user)
+
+#### **Browse Services**
+- View all available services on the home screen
+- Scroll through the list to see different providers and their services
+
+#### **Search for Services**
+1. Use the **search bar** at the top of the home screen
+2. Type keywords like "haircut", "car repair", "dog grooming", etc.
+3. Results will filter automatically as you type
+
+#### **Filter by Category**
+1. Tap on **category chips** below the search bar
+2. Choose from: Hair Care, Automotive, Pet Care, Education, Nail Services, etc.
+3. Services will filter to show only the selected category
+
+#### **Sort Services**
+1. Tap the **sort icon** in the top right corner
+2. Choose your preferred sorting:
+   - **Most Recent:** Newest services first
+   - **Price: Low to High:** Cheapest first
+   - **Price: High to Low:** Most expensive first
+   - **Highest Rating:** Best-rated services first
+   - **Popularity:** Most reviewed services first
+
+#### **View Service Details**
+1. Tap on any **service card** to open full details
+2. Read the description, pricing, availability, and customer reviews
+3. See provider contact information and location
+
+#### **Contact a Provider**
+- Tap **"Call"** to phone the provider directly
+- Tap **"Email"** to send an email
+- Tap **"Get Directions"** to navigate to their location (requires Google Maps)
+
+#### **Write a Review**
+1. Open any **service detail page**
+2. Scroll down to the reviews section
+3. Tap **"Write a Review"** button
+4. Select a **star rating** (1-5 stars)
+5. Write your **review comments** in the text field
+6. Tap **"Submit Review"**
+
+#### **Change Language**
+1. Go to your **Profile** (bottom navigation)
+2. Tap **"Settings"**
+3. Select **"Language"**
+4. Choose from: **English**, **Spanish (Español)**, **Vietnamese (Tiếng Việt)**, or **Chinese (中文)**
+5. The entire app interface will switch to your chosen language
+
+---
+
+### 🏢 For Providers (Service Sellers):
+
+#### **Sign Up as a Provider**
+1. From the main screen, tap **"Switch to Provider"**
+2. In the Sign-Up tab, enter:
+   - **Full Name** (required)
+   - **Phone Number** (required, format: ###-###-####)
+   - **Email** (optional)
+   - **Business Address** (required)
+   - **Password** (minimum 6 characters, required)
+   - **Confirm Password** (required)
+3. Tap **"Sign Up"**
+
+#### **Sign In as an Existing Provider**
+1. Tap **"Switch to Provider"** on the main screen
+2. Switch to the **"Sign In"** tab
+3. Enter your **email/phone** and **password**
+4. Tap **"Sign In"**
+
+#### **Add a New Service**
+1. From your **Provider Dashboard**, tap the **"+" (Add)** button
+2. Fill in the service details:
+   - **Service Title:** Name of your service (e.g., "Professional Haircut")
+   - **Description:** Detailed description of what you offer
+   - **Pricing:** Your pricing structure (e.g., "$30 per session")
+   - **Category:** Select one or multiple categories
+   - **Service Area:** Location where you provide service
+   - **Availability:** Your working hours/days
+   - **Contact Preference:** How customers should reach you
+   - **Service Image:** Upload a photo (optional)
+3. Tap **"Save Service"**
+
+#### **Edit an Existing Service**
+1. From your dashboard, tap on the **service card** you want to edit
+2. Tap the **"Edit"** button
+3. Make your changes to any field
+4. Tap **"Save Changes"**
+
+#### **Delete a Service**
+1. From your dashboard, tap on the **service card** you want to delete
+2. Tap the **"Delete"** button
+3. Confirm deletion in the popup dialog
+
+#### **Edit Your Profile**
+1. From your dashboard, tap **"Settings"** (gear icon)
+2. Tap **"Edit Profile"**
+3. Update any of the following: Full Name, Email, Phone Number, Business Address
+4. Tap **"Save Changes"**
+
+#### **Change Your Password**
+1. Go to **Settings** from your dashboard
+2. Tap **"Change Password"**
+3. Enter your **current password**
+4. Enter your **new password** (minimum 6 characters)
+5. **Confirm new password**
+6. Tap **"Update Password"**
+
+#### **Switch to Customer Mode**
+1. Logout from provider dashboard
+2. At the authentication screen, tap **"Switch to Customer"**
+3. Sign in with your customer account (different from provider account)
+
+---
 
 
 
